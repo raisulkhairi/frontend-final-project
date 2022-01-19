@@ -1,4 +1,7 @@
 {
+  "cli": {
+    "analytics": "f6fd0a9b-07e0-4acb-a237-ad23f93dfb3f"
+  },
   "version": 1,
   "projects": {
     "student": {

@@ -25,3 +25,16 @@
   background-color: #04aa6d;
   color: white;
 }
+.box-class{
+  border: 1px solid #adadad;
+  min-height: 80vh;
+  border-radius: 10px;
+  background: white;
+}
+.title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: initial;
+  letter-spacing: 3px;
+  margin: 20px;
+}

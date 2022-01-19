@@ -5,7 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 
 // Icon Module
 import { MatIconModule } from '@angular/material/icon';
-
+//date picker
+import {MatDatepickerModule} from '@angular/material/datepicker';
 // Dialog Module
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -45,6 +46,9 @@ import { MatDividerModule } from '@angular/material/divider';
 // Toolbar
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+// matradio
+import {MatRadioModule} from '@angular/material/radio';
+
 // Array
 const MaterialComponents = [
   MatButtonModule,
@@ -62,6 +66,8 @@ const MaterialComponents = [
   MatCardModule,
   MatDividerModule,
   MatToolbarModule,
+  MatDatepickerModule,
+  MatRadioModule,
 ];
 
 @NgModule({

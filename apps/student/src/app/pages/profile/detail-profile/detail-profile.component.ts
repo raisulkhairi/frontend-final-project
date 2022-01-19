@@ -69,6 +69,7 @@ export class DetailProfileComponent implements OnInit {
           id: '',
         },
         score_subject: '',
+
       },
     ],
   };

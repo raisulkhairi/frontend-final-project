@@ -42,6 +42,6 @@ export class ScoreComponent implements OnInit {
       });
     setTimeout(() => {
       this.grades = this.grades2;
-    }, 200);
+    }, 1000);
   }
 }
