@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -26,9 +27,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
-
-// Route
-// import { ScoringComponent } from './scoring/scoring.component';
 
 // Spinner
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -95,6 +93,7 @@ FullCalendarModule.registerPlugins([
     SidenavComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes),
     MaterialModule,

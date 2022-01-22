@@ -3,19 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 // Module Angular Material
 import { MaterialModule } from './material/material.module';
+import { ShellComponent } from './shared/shell/shell.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ScoreComponent } from './pages/info/score/score.component';
-import { KelasComponent } from './pages/info/kelas/kelas.component';
-import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
-import { DetailProfileComponent } from './pages/profile/detail-profile/detail-profile.component';
-import { CalendarComponent } from './component/calendar/calendar.component';
-import { InfoComponent } from './component/info/info.component';
+import { LoginComponent } from './pages/login/login.component';
+////
 
-//////////////////////////////////////////////////////////////
+import { CommonModule } from '@angular/common';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Form
@@ -31,14 +29,17 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 
-// Route
-import { Routes } from '@angular/router';
-import { ShellComponent } from './shared/shell/shell.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { SidenavComponent } from './component/sidenav/sidenav.component';
+// Spinner
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// Import library module
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { DetailProfileComponent } from './pages/profile/detail-profile/detail-profile.component';
+import { EditProfileComponent } from './pages/profile/edit-profile/edit-profile.component';
+import { CalendarComponent } from './component/calendar/calendar.component';
+import { InfoComponent } from './component/info/info.component';
+import { ScoreInfoComponent } from './pages/score-info/score-info.component';
 
 const routes: Routes = [
- 
   {
     path: '',
     component: ShellComponent,
@@ -56,12 +57,8 @@ const routes: Routes = [
         component: EditProfileComponent,
       },
       {
-        path: 'class-info',
-        component: KelasComponent,
-      },
-      {
-        path: 'grade-info',
-        component: ScoreComponent,
+        path: 'score-info/:idStudent',
+        component: ScoreInfoComponent,
       },
     ],
   },
@@ -78,18 +75,18 @@ FullCalendarModule.registerPlugins([
   declarations: [
     AppComponent,
     NxWelcomeComponent,
-    DashboardComponent,
-    ScoreComponent,
-    KelasComponent,
-    EditProfileComponent,
-    DetailProfileComponent,
-    CalendarComponent,
-    InfoComponent,
     ShellComponent,
     SidebarComponent,
-    SidenavComponent,
+    DashboardComponent,
+    LoginComponent,
+    DetailProfileComponent,
+    EditProfileComponent,
+    CalendarComponent,
+    InfoComponent,
+    ScoreInfoComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes),
     MaterialModule,
@@ -98,8 +95,10 @@ FullCalendarModule.registerPlugins([
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
