@@ -26,9 +26,9 @@
   margin-bottom: 100px;
 }
 .photo img {
-  width: 155px;
-  height: auto;
-}
+  max-width: 235px;
+   height: 100%;
+ }
 .name1 {
   width: 155px;
   margin: 10px 0;
@@ -40,4 +40,19 @@
 }.edit {
   float: right;
   margin: 20px;
+}
+.bio {
+  padding-bottom: 60px;
+}
+img.photo-profil {
+  clip-path: circle();
+}
+.title-profil{
+  text-align: center;
+  font-size: 40px;
+  margin: 30px 0;
+  font-weight: 300;
+  letter-spacing: 6px;
+  font-family: sans-serif;
+  color: #666666;
 }

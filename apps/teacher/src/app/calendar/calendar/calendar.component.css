@@ -13,16 +13,20 @@
 }
 
 .convert-button {
-  background: purple;
-  position: relative;
+  margin: 20px;
+  float: right;
 }
 
 .convert-button h1 {
   text-align: center;
 }
 
-.convert-button button {
-  position: absolute;
-  right: 208px;
-  top: 20px;
+.wrapper {
+  border: 1px solid #a0a0a0;
+  padding: 0 10px;
+  padding-bottom: 70px;
+  background: #ffff;
+  box-shadow: 3px 3px rgb(177, 177, 177);
+  border-radius: 10px;
+  margin: 0 20px;
 }

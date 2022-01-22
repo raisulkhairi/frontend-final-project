@@ -1,11 +1,15 @@
+<div class="title-edit">
+  <p>Edit Profil</p>
+</div>
 <div class="container">
   <div class="detail-profil">
     <div class="photo">
-      <div>
+      <div class="container-profil">
         <img
           [src]="imageDisplay ? imageDisplay : imageStudent"
           alt=""
           style="width: 200px"
+          class="photo-profil"
         />
       </div>
 
@@ -18,7 +22,9 @@
           id="formFile"
         />
       </form>
-      <input type="submit" (click)="submitImage()" value="Save" />
+      <div class="save-image">
+        <input type="submit" (click)="submitImage()" value="Save" />
+      </div>
     </div>
     <div class="bio">
       <form [formGroup]="form">
@@ -95,13 +101,13 @@
           name="blood_group"
         />
 
-        <label for="religion">Religion</label>
-        <input
-          formControlName="religion"
-          type="text"
-          id="religion"
-          name="religion"
-        />
+        <select formControlName="religion" [(ngModel)]="selectedReligion">
+          <option value="Islam">Islam</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Buddhist">Buddhist</option>
+          <option value="Christian">Christian</option>
+          <option value="Others">Others</option>
+        </select>
 
         <label for="email">Email</label>
         <input formControlName="email" type="text" id="email" name="email" />

@@ -27,14 +27,16 @@
 }
 .box-class{
   border: 1px solid #adadad;
-  min-height: 80vh;
+  min-height: 70vh;
   border-radius: 10px;
   background: white;
 }
 .title {
   text-align: center;
-  font-size: 35px;
-  font-weight: initial;
-  letter-spacing: 3px;
-  margin: 20px;
+  font-size: 40px;
+  margin: 30px 0;
+  font-weight: 300;
+  letter-spacing: 6px;
+  font-family: sans-serif;
+  color: #666666;
 }

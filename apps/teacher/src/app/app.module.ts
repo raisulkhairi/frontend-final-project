@@ -39,6 +39,7 @@ import { EditProfilComponent } from './profil/edit-profil/edit-profil.component'
 import { AddScoreComponent } from './add-score/add-score.component';
 import { HomeRoomPanelComponent } from './home-room-panel/home-room-panel.component';
 import { LoginComponent } from './pages/login/login.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 // import { LoginComponent } from './login/login.component';
 ///
 const routes: Routes = [
@@ -91,6 +92,7 @@ FullCalendarModule.registerPlugins([
     AddScoreComponent,
     HomeRoomPanelComponent,
     LoginComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

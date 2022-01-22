@@ -14,6 +14,8 @@ export class EditProfileComponent implements OnInit {
   formImage!: FormGroup;
   imageStudent: any;
   imageDisplay: any;
+  selectedReligion?:any
+  religionValue?:string
   constructor(
     private studentService: StudentService,
     private formBuilder: FormBuilder
@@ -53,6 +55,8 @@ export class EditProfileComponent implements OnInit {
   private studentEditForm(id: any) {
     this.studentService.getStudentByID(id).subscribe((res) => {
       this.imageStudent = res.image;
+      this.religionValue = res.religion
+      console.log("Reli : ", this.religionValue);  
       console.log(this.imageStudent);
       this.studentForm['first_name'].setValue(res.first_name);
       this.studentForm['last_name'].setValue(res.last_name);
@@ -62,8 +66,6 @@ export class EditProfileComponent implements OnInit {
       this.studentForm['date_of_birth'].setValue(res.date_of_birth);
       this.studentForm['father_occupation'].setValue(res.father_occupation);
       this.studentForm['blood_group'].setValue(res.blood_group);
-      this.studentForm['religion'].setValue(res.religion);
-
       this.studentForm['email'].setValue(res.email);
       this.studentForm['address'].setValue(res.address);
       this.studentForm['phone'].setValue(res.phone);
@@ -94,13 +96,16 @@ export class EditProfileComponent implements OnInit {
       date_of_birth: this.studentForm['date_of_birth'].value,
       father_occupation: this.studentForm['father_occupation'].value,
       blood_group: this.studentForm['blood_group'].value,
-      religion: this.studentForm['religion'].value,
+      religion: this.selectedReligion,
       email: this.studentForm['email'].value,
       address: this.studentForm['address'].value,
       phone: this.studentForm['phone'].value,
       short_bio: this.studentForm['short_bio'].value,
       password: this.studentForm['password'].value,
     };
+
+    console.log("Reli : ",studentData);
+
 
     this.studentService
       .editStudent('61dd725e5d67e84ef1b830d2', studentData)
