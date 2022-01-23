@@ -60,6 +60,6 @@ export class HomeRoomPanelComponent implements OnInit {
           }
         });
       });
-    }, 100);
+    }, 500);
   }
 }
