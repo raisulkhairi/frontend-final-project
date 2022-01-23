@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 // Module Angular Material
 import { MaterialModule } from './material/material.module';
@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Http Client Module
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Fullcalendar.io
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -32,17 +32,27 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 
 // Route
-import { Routes } from '@angular/router';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { SidenavComponent } from './component/sidenav/sidenav.component';
+import { ForgetPasswordComponent } from './component/forget-password/forget-password.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthInterceptor } from './services/jwt.interceptor';
 
 const routes: Routes = [
- 
   {
     path: '',
+    canActivate: [AuthGuardService],
     component: ShellComponent,
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+      },
       {
         path: 'dashboard',
         component: DashboardComponent,
@@ -63,7 +73,15 @@ const routes: Routes = [
         path: 'grade-info',
         component: ScoreComponent,
       },
+      {
+        path: 'not-found',
+        component: NotFoundPageComponent,
+      },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
   },
 ];
 
@@ -88,6 +106,9 @@ FullCalendarModule.registerPlugins([
     ShellComponent,
     SidebarComponent,
     SidenavComponent,
+    ForgetPasswordComponent,
+    LoginPageComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +120,13 @@ FullCalendarModule.registerPlugins([
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

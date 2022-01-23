@@ -2,7 +2,7 @@
   <mat-sidenav [(opened)]="opened" #sidenav mode="side">
     <div class="logo">
       <img src="/assets/images/logo.png" alt="" />
-    </div>   
+    </div>
     <div class="links">
       <ul>
         <li>
@@ -11,9 +11,7 @@
           >
         </li>
         <li>
-          <a routerLink="./detail-profile"
-            ><mat-icon>person</mat-icon>Profil</a
-          >
+          <a routerLink="./detail-profile"><mat-icon>person</mat-icon>Profil</a>
         </li>
         <li>
           <a (click)="showInfo = !showInfo"
@@ -34,7 +32,9 @@
         </li>
 
         <li>
-          <a href=""><mat-icon aria-hidden="false">logout</mat-icon>Logout</a>
+          <a (click)="logoutUser()"
+            ><mat-icon aria-hidden="false">logout</mat-icon>Logout</a
+          >
         </li>
       </ul>
     </div>

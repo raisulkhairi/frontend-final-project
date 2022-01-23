@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
+import { LocalstorageService } from '../../services/localstorage.service';
 import { ParentService } from '../../services/parent.service';
 
 @Component({
@@ -16,19 +17,18 @@ export class DashboardComponent implements OnInit {
   */
   childData?: any[];
   allData: any[] = [];
-  constructor(private parentService: ParentService) {}
+  idUser?: string;
+  constructor(
+    private parentService: ParentService,
+    private localstorageService: LocalstorageService
+  ) {}
 
   ngOnInit(): void {
-    this.parentService
-      .getParentById('61e29a10f9e10e4f8ad8913d')
-      .subscribe((el) => {
-        this.childData = el.child;
-        console.log(this.childData);
-        // this.parentData.child?.forEach((el: any) => {
-        //   this.message.push({ message: el._id });
-        // });
-        // this.allData.push(this.parentData);
-        // this.allData.push(this.message);
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.parentService.getParentById(this.idUser).subscribe((el) => {
+      this.childData = el.child;
+    });
   }
 }

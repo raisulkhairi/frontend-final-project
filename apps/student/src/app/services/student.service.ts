@@ -14,12 +14,25 @@ export class StudentService {
   getStudentByID(id: string): Observable<Student> {
     return this.http.get<Student>(`${link2}/api/student/${id}`);
   }
-  editStudent(id: string, data: any): Observable<Student> {
-    return this.http.put<Student>(`${link2}/api/student/bystudent/${id}`, data);
+  editStudent(id: string, data: any): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
+      `${link2}/api/student/bystudent/${id}`,
+      data
+    );
   }
-  editStudentImageByStudent(idStudent: any, data: any): Observable<Student> {
-    return this.http.put<Student>(
+  editStudentImageByStudent(
+    idStudent: any,
+    data: any
+  ): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
       `${link2}/api/student/bystudent/image/${idStudent}`,
+      data
+    );
+  }
+
+  resetPassword(data: { email: string }): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
+      `${link2}/api/student/reset-password`,
       data
     );
   }

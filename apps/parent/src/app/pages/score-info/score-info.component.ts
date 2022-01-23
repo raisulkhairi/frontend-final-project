@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocalstorageService } from '../../services/localstorage.service';
+import { ParentService } from '../../services/parent.service';
 import { StudentService } from '../../services/student.service';
 
 interface gradeInterface {
   'Subject Name': string;
   score: number;
 }
-
 @Component({
   selector: 'parent-score-info',
   templateUrl: './score-info.component.html',
@@ -15,22 +16,47 @@ interface gradeInterface {
 export class ScoreInfoComponent implements OnInit {
   constructor(
     private studentService: StudentService,
-    private route: ActivatedRoute
-  ) {}
+    private parentService: ParentService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private localstorageService: LocalstorageService
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   studentData: any[] = [];
   idStudent: any;
   displayedColumns: string[] = ['Subject Name', 'score'];
   grades: gradeInterface[] = [];
   grades2: gradeInterface[] = [];
+  idUser?: string;
+  children: any[] = [];
+  children2?: any[];
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      params['idStudent'];
-
-      this.idStudent = params['idStudent'];
+  ngOnInit() {
+    this._parentInit();
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        params['idStudent'];
+        if (this.children.includes(params['idStudent'])) {
+          this.idStudent = params['idStudent'];
+          this._studentInit(this.idStudent);
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+  private _parentInit() {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.parentService.getParentById(this.idUser).subscribe((res) => {
+      res.child?.forEach((el: any) => {
+        this.children.push(el._id.toString());
+      });
+      this.children2 = this.children;
     });
-    this._studentInit(this.idStudent);
   }
 
   private _studentInit(id: any) {
@@ -44,7 +70,6 @@ export class ScoreInfoComponent implements OnInit {
           score: parseInt(el.score_subject),
         });
       });
-      console.log(this.grades2);
     });
     setTimeout(() => {
       this.grades = this.grades2;

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
 import { Parent } from '../../../models/parent';
+import { LocalstorageService } from '../../../services/localstorage.service';
 import { ParentService } from '../../../services/parent.service';
 
 @Component({
@@ -10,7 +11,11 @@ import { ParentService } from '../../../services/parent.service';
   styleUrls: ['./detail-profile.component.css'],
 })
 export class DetailProfileComponent implements OnInit {
-  constructor(private parentService: ParentService) {}
+  idUser?: string;
+  constructor(
+    private parentService: ParentService,
+    private localstorageService: LocalstorageService
+  ) {}
   parentData: Parent = {
     _id: '',
     first_name: '',
@@ -48,10 +53,11 @@ export class DetailProfileComponent implements OnInit {
   }
 
   private _parentInit() {
-    this.parentService
-      .getParentById('61e29a10f9e10e4f8ad8913d')
-      .subscribe((res) => {
-        this.parentData = res;
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.parentService.getParentById(this.idUser).subscribe((res) => {
+      this.parentData = res;
+    });
   }
 }

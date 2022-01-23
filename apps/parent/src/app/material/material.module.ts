@@ -39,6 +39,12 @@ import { MatTableModule } from '@angular/material/table';
 // Card
 import { MatCardModule } from '@angular/material/card';
 
+//tool
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+// Datepicker
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 // Array
 const MaterialComponents = [
   MatButtonModule,
@@ -54,6 +60,8 @@ const MaterialComponents = [
   MatSnackBarModule,
   MatTableModule,
   MatCardModule,
+  MatToolbarModule,
+  MatDatepickerModule,
 ];
 
 @NgModule({

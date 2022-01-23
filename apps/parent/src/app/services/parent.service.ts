@@ -17,12 +17,21 @@ export class ParentService {
   getParentById(id: any): Observable<Parent> {
     return this.http.get<Parent>(`${port}/api/parent/${id}`);
   }
-  editByParent(id: any, data: any): Observable<Parent> {
-    return this.http.put<Parent>(`${port}/api/parent/byparent/${id}`, data);
+  editByParent(id: any, data: any): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
+      `${port}/api/parent/byparent/${id}`,
+      data
+    );
   }
-  editParentImageByParent(id: any, data: any): Observable<Parent> {
-    return this.http.put<Parent>(
+  editParentImageByParent(id: any, data: any): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
       `${port}/api/parent/byparent/image/${id}`,
+      data
+    );
+  }
+  resetPassword(data: { email: string }): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
+      `${port}/api/parent/reset-password`,
       data
     );
   }
