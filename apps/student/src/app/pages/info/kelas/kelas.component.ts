@@ -1,6 +1,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
+import { LocalstorageService } from '../../../services/localstorage.service';
 import { StudentService } from '../../../services/student.service';
 
 @Component({
@@ -9,18 +10,23 @@ import { StudentService } from '../../../services/student.service';
   styleUrls: ['./kelas.component.css'],
 })
 export class KelasComponent implements OnInit {
-  constructor(private studentService: StudentService) {}
+  idUser!: string;
+
+  constructor(
+    private studentService: StudentService,
+    private localstorageService: LocalstorageService
+  ) {}
   classData: any;
   ngOnInit(): void {
     this._studentInit();
   }
 
   private _studentInit() {
-    this.studentService
-      .getStudentByID('61dd725e5d67e84ef1b830d2')
-      .subscribe((res) => {
-        console.log(res.kelas);
-        this.classData = res.kelas;
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.studentService.getStudentByID(this.idUser).subscribe((res) => {
+      this.classData = res.kelas;
+    });
   }
 }

@@ -4,7 +4,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ScheduleService } from '../../services/schedule.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Routes } from '@angular/router';
 
 @Component({
   selector: 'parent-info',

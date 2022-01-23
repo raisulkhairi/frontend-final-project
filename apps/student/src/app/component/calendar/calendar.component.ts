@@ -13,6 +13,7 @@ import { InfoComponent } from '../info/info.component';
 // Convert To PDF
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { LocalstorageService } from '../../services/localstorage.service';
 @Component({
   selector: 'student-calendar',
   templateUrl: './calendar.component.html',
@@ -22,10 +23,12 @@ export class CalendarComponent implements OnInit {
   events: any[] = [];
   calendarOptions!: CalendarOptions;
   calendarVisible = true;
+  idUser!: string;
 
   constructor(
     private scheduleService: ScheduleService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private localstorageService: LocalstorageService
   ) {}
   ngOnInit() {
     this._eventInit();
@@ -53,11 +56,12 @@ export class CalendarComponent implements OnInit {
 
   // Id Student didapat dari token
   private _eventInit() {
-    this.scheduleService
-      .getScheduleByStudent('61dd791b6613a2d3e7c6695d')
-      .subscribe((data) => {
-        this.events.push(data);
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.scheduleService.getScheduleByStudent(this.idUser).subscribe((data) => {
+      this.events.push(data);
+    });
   }
 
   handleCalendarToggle() {

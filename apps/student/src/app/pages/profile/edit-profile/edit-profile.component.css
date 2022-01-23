@@ -27,7 +27,7 @@ input[type='submit']:hover {
   margin: 10px auto;
   border: 1px solid #b9b9b9;
   border-radius: 10px;
-  background: #ffffff;;
+  background: #ffffff;
   padding: 20px;
   box-shadow: 2px 2px #a8a6a6;
   display: flex;
@@ -85,4 +85,48 @@ input#formFile {
   letter-spacing: 6px;
   font-family: sans-serif;
   color: #666666;
+}
+
+small {
+  display: block;
+  margin-bottom: 10px;
+  color: red;
+}
+
+/* Removes the clear button from date inputs */
+input[type='date']::-webkit-clear-button {
+  display: none;
+}
+
+/* Removes the spin button */
+input[type='date']::-webkit-inner-spin-button {
+  display: none;
+}
+
+/* Always display the drop down caret */
+input[type='date']::-webkit-calendar-picker-indicator {
+  color: #2c3e50;
+}
+
+/* A few custom styles for date inputs */
+input[type='date'] {
+  margin-bottom: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  color: #95a5a6;
+  font-family: 'Helvetica', arial, sans-serif;
+  font-size: 18px;
+  border: 1px solid #ecf0f1;
+  background: #ecf0f1;
+  padding: 5px;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+
+input[type='date'],
+focus {
+  color: #95a5a6;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }

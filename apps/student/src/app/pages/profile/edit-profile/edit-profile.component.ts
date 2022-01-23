@@ -3,7 +3,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Student } from '../../../models/student';
+import { LocalstorageService } from '../../../services/localstorage.service';
 import { StudentService } from '../../../services/student.service';
+import * as moment from 'moment';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 @Component({
   selector: 'student-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -14,17 +21,28 @@ export class EditProfileComponent implements OnInit {
   formImage!: FormGroup;
   imageStudent: any;
   imageDisplay: any;
-  selectedReligion?:any
-  religionValue?:string
+  selectedReligion?: any;
+  religionValue?: string;
+  idUser!: string;
+  isSubmitted = false;
+  selectedGender?: any;
+  selectedBloodGroup?: any;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private studentService: StudentService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private localstorageService: LocalstorageService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
     this._studentInit();
     this._studentImageInit();
-    this.studentEditForm('61dd725e5d67e84ef1b830d2');
+    this.studentEditForm(this.idUser);
   }
 
   private _studentInit() {
@@ -38,7 +56,7 @@ export class EditProfileComponent implements OnInit {
       father_occupation: ['', Validators.required],
       blood_group: ['', Validators.required],
       religion: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       short_bio: ['', Validators.required],
@@ -55,17 +73,17 @@ export class EditProfileComponent implements OnInit {
   private studentEditForm(id: any) {
     this.studentService.getStudentByID(id).subscribe((res) => {
       this.imageStudent = res.image;
-      this.religionValue = res.religion
-      console.log("Reli : ", this.religionValue);  
-      console.log(this.imageStudent);
       this.studentForm['first_name'].setValue(res.first_name);
       this.studentForm['last_name'].setValue(res.last_name);
       this.studentForm['gender'].setValue(res.gender);
       this.studentForm['father_name'].setValue(res.father_name);
       this.studentForm['mother_name'].setValue(res.mother_name);
-      this.studentForm['date_of_birth'].setValue(res.date_of_birth);
+      this.studentForm['date_of_birth'].setValue(
+        moment(res.date_of_birth).utc().format('YYYY-MM-DD')
+      );
       this.studentForm['father_occupation'].setValue(res.father_occupation);
       this.studentForm['blood_group'].setValue(res.blood_group);
+      this.studentForm['religion'].setValue(res.religion);
       this.studentForm['email'].setValue(res.email);
       this.studentForm['address'].setValue(res.address);
       this.studentForm['phone'].setValue(res.phone);
@@ -87,6 +105,10 @@ export class EditProfileComponent implements OnInit {
     }
   }
   editStudent() {
+    this.isSubmitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     const studentData: Student = {
       first_name: this.studentForm['first_name'].value,
       last_name: this.studentForm['last_name'].value,
@@ -96,7 +118,7 @@ export class EditProfileComponent implements OnInit {
       date_of_birth: this.studentForm['date_of_birth'].value,
       father_occupation: this.studentForm['father_occupation'].value,
       blood_group: this.studentForm['blood_group'].value,
-      religion: this.selectedReligion,
+      religion: this.studentForm['religion'].value,
       email: this.studentForm['email'].value,
       address: this.studentForm['address'].value,
       phone: this.studentForm['phone'].value,
@@ -104,13 +126,16 @@ export class EditProfileComponent implements OnInit {
       password: this.studentForm['password'].value,
     };
 
-    console.log("Reli : ",studentData);
-
-
     this.studentService
-      .editStudent('61dd725e5d67e84ef1b830d2', studentData)
+      .editStudent(this.idUser, studentData)
       .subscribe((res) => {
-        console.log('HASIL EDIT DATA : ', res);
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
   }
 
@@ -121,9 +146,15 @@ export class EditProfileComponent implements OnInit {
     });
 
     this.studentService
-      .editStudentImageByStudent('61dd725e5d67e84ef1b830d2', imageStudent)
+      .editStudentImageByStudent(this.idUser, imageStudent)
       .subscribe((res) => {
-        console.log('Hasil : ', res);
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
   }
 
