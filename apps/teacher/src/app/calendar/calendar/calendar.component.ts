@@ -15,8 +15,7 @@ import { InfoComponent } from '../info/info.component';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 
-// Spinner
-import { NgxSpinnerService } from 'ngx-spinner';
+import { LocalstorageService } from '../../services/localstorage.service';
 
 @Component({
   selector: 'teacher-calendar',
@@ -27,11 +26,12 @@ export class CalendarComponent implements OnInit {
   events: any[] = [];
   calendarOptions!: CalendarOptions;
   calendarVisible = true;
+  idUser!: string;
 
   constructor(
     private scheduleService: ScheduleService,
     private dialog: MatDialog,
-    private spinner: NgxSpinnerService
+    private localstorageService: LocalstorageService
   ) {}
   ngOnInit() {
     this._eventInit();
@@ -58,18 +58,16 @@ export class CalendarComponent implements OnInit {
 
   // Id Teacher didapat dari token
   private _eventInit() {
-    this.spinner.show();
-    this.scheduleService
-      .getScheduleByTeacher('61d6f6a79d85b51c80471723')
-      .subscribe(
-        (data) => {
-          this.events.push(data);
-        },
-        () => {},
-        () => {
-          this.spinner.hide();
-        }
-      );
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.scheduleService.getScheduleByTeacher(this.idUser).subscribe(
+      (data) => {
+        this.events.push(data);
+      },
+      () => {},
+      () => {}
+    );
   }
 
   handleCalendarToggle() {

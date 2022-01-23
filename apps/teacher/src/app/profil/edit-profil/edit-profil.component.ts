@@ -4,7 +4,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Teacher } from '../../models/teacher';
 import { TeacherService } from '../../services/teacher.service';
-
+import * as moment from 'moment';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { LocalstorageService } from '../../services/localstorage.service';
 @Component({
   selector: 'teacher-edit-profil',
   templateUrl: './edit-profil.component.html',
@@ -15,17 +21,28 @@ export class EditProfilComponent implements OnInit {
   formImage!: FormGroup;
   imageTeacher: any;
   imageDisplay: any;
-  selectedReligion?:any
-  religionValue?:string
+  religionValue?: string;
+  isSubmitted = false;
+  idUser?: string;
+  selectedReligion?: any;
+  selectedGender?: any;
+  selectedBloodGroup?: any;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private teacherService: TeacherService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private localstorageService: LocalstorageService
   ) {}
 
   ngOnInit(): void {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
     this._teachertInit();
     this._teacherImageInit();
-    this.teacherEditForm('61d6f6a79d85b51c80471723');
+    this.teacherEditForm(this.idUser);
   }
 
   private _teachertInit() {
@@ -36,11 +53,10 @@ export class EditProfilComponent implements OnInit {
       date_of_birth: ['', Validators.required],
       blood_group: ['', Validators.required],
       religion: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       short_bio: ['', Validators.required],
-      password: ['', Validators.required],
     });
   }
 
@@ -57,15 +73,15 @@ export class EditProfilComponent implements OnInit {
       this.teacherForm['first_name'].setValue(res.first_name);
       this.teacherForm['last_name'].setValue(res.last_name);
       this.teacherForm['gender'].setValue(res.gender);
-      this.teacherForm['date_of_birth'].setValue(res.date_of_birth);
+      this.teacherForm['date_of_birth'].setValue(
+        moment(res.date_of_birth).utc().format('YYYY-MM-DD')
+      );
       this.teacherForm['blood_group'].setValue(res.blood_group);
       this.teacherForm['religion'].setValue(res.religion);
-
       this.teacherForm['email'].setValue(res.email);
       this.teacherForm['address'].setValue(res.address);
       this.teacherForm['phone'].setValue(res.phone);
       this.teacherForm['short_bio'].setValue(res.short_bio);
-      this.teacherForm['password'].setValue(res.password);
     });
   }
 
@@ -82,6 +98,10 @@ export class EditProfilComponent implements OnInit {
     }
   }
   editTeacher() {
+    this.isSubmitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     const teacherData: Teacher = {
       first_name: this.teacherForm['first_name'].value,
       last_name: this.teacherForm['last_name'].value,
@@ -93,13 +113,18 @@ export class EditProfilComponent implements OnInit {
       address: this.teacherForm['address'].value,
       phone: this.teacherForm['phone'].value,
       short_bio: this.teacherForm['short_bio'].value,
-      password: this.teacherForm['password'].value,
     };
 
     this.teacherService
-      .editTeacherByTeacher('61d6f6a79d85b51c80471723', teacherData)
+      .editTeacherByTeacher(this.idUser, teacherData)
       .subscribe((res) => {
-        console.log('HASIL EDIT DATA : ', res);
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
   }
 
@@ -110,9 +135,15 @@ export class EditProfilComponent implements OnInit {
     });
 
     this.teacherService
-      .editTeacherImageByTeacher('61d6f6a79d85b51c80471723', imageTeacher)
+      .editTeacherImageByTeacher(this.idUser, imageTeacher)
       .subscribe((res) => {
-        console.log('Hasil : ', res);
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       });
   }
 

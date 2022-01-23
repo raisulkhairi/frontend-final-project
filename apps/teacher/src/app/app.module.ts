@@ -1,25 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { ShellComponent } from './shared/shell/shell.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { DashboradComponent } from './pages/dashborad/dashborad.component';
-
-// Module Angular Material
+import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from './material/material.module';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarComponent } from './calendar/calendar/calendar.component';
-import { InfoComponent } from './calendar/info/info.component';
-
-// Form
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-// Http Client Module
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Fullcalendar.io
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -28,23 +16,40 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 
-// Spinner
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ShellComponent } from './shared/shell/shell.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { DashboradComponent } from './pages/dashborad/dashborad.component';
+
+// Module Angular Material
+import { CalendarComponent } from './calendar/calendar/calendar.component';
+import { InfoComponent } from './calendar/info/info.component';
+
 // Import library module
-import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { DetailProfilComponent } from './profil/detail-profil/detail-profil.component';
 import { EditProfilComponent } from './profil/edit-profil/edit-profil.component';
 import { AddScoreComponent } from './add-score/add-score.component';
 import { HomeRoomPanelComponent } from './home-room-panel/home-room-panel.component';
-import { LoginComponent } from './pages/login/login.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-// import { LoginComponent } from './login/login.component';
-///
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthInterceptor } from './services/jwt.interceptor';
+
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+
 const routes: Routes = [
   {
     path: '',
+    canActivate: [AuthGuardService],
     component: ShellComponent,
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard',
+      },
       {
         path: 'dashboard',
         component: DashboradComponent,
@@ -65,7 +70,15 @@ const routes: Routes = [
         path: 'home-room-panel',
         component: HomeRoomPanelComponent,
       },
+      {
+        path: 'not-found',
+        component: NotFoundPageComponent,
+      },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent,
   },
 ];
 
@@ -89,8 +102,10 @@ FullCalendarModule.registerPlugins([
     EditProfilComponent,
     AddScoreComponent,
     HomeRoomPanelComponent,
-    LoginComponent,
     SidenavComponent,
+    LoginPageComponent,
+    NotFoundPageComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -102,10 +117,14 @@ FullCalendarModule.registerPlugins([
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

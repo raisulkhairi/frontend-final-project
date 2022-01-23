@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
 import { Teacher } from '../../models/teacher';
+import { LocalstorageService } from '../../services/localstorage.service';
 import { TeacherService } from '../../services/teacher.service';
 
 @Component({
@@ -10,7 +11,12 @@ import { TeacherService } from '../../services/teacher.service';
   styleUrls: ['./detail-profil.component.css'],
 })
 export class DetailProfilComponent implements OnInit {
-  constructor(private teacherService: TeacherService) {}
+  idUser?: string;
+
+  constructor(
+    private teacherService: TeacherService,
+    private localstorageService: LocalstorageService
+  ) {}
   teacherData: Teacher = {
     _id: '',
     first_name: '',
@@ -41,11 +47,12 @@ export class DetailProfilComponent implements OnInit {
   }
 
   private _teacherInit() {
-    this.teacherService
-      .getTeacherByID('61d6f6a79d85b51c80471723')
-      .subscribe((res) => {
-        this.teacherData = res;
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.teacherService.getTeacherByID(this.idUser).subscribe((res) => {
+      this.teacherData = res;
+    });
   }
 
   Submit() {}

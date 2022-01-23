@@ -21,15 +21,27 @@ export class TeacherService {
   getTeacherByID(idTeacher: any): Observable<Teacher> {
     return this.http.get<Teacher>(`${link2}/api/teacher/${idTeacher}`);
   }
-  editTeacherByTeacher(idTeacher: any, data: any): Observable<Teacher> {
-    return this.http.put<Teacher>(
+  editTeacherByTeacher(
+    idTeacher: any,
+    data: any
+  ): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
       `${link2}/api/teacher/byteacher/${idTeacher}`,
       data
     );
   }
-  editTeacherImageByTeacher(idTeacher: any, data: any): Observable<Teacher> {
-    return this.http.put<Teacher>(
+  editTeacherImageByTeacher(
+    idTeacher: any,
+    data: any
+  ): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
       `${link2}/api/teacher/byteacher/image/${idTeacher}`,
+      data
+    );
+  }
+  resetPassword(data: { email: string }): Observable<{ message: string }> {
+    return this.http.put<{ message: string }>(
+      `${link2}/api/teacher/reset-password`,
       data
     );
   }

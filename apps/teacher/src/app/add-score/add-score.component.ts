@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Kelas } from '../models/kelas';
 import { Subject } from '../models/subject';
 import { KelasService } from '../services/kelas.service';
@@ -14,8 +14,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 
-// Spinner
-import { NgxSpinnerService } from 'ngx-spinner';
+import { LocalstorageService } from '../services/localstorage.service';
 
 export interface ScoreInterface {
   id?: string;
@@ -38,6 +37,8 @@ export class AddScoreComponent implements OnInit {
   dataSubject!: Subject;
   infoKelas!: Kelas;
   tempData?: ScoreInterface;
+  idUser?: string;
+  subjectsData?: any[];
   constructor(
     private studentService: StudentService,
     private subjectService: SubjectService,
@@ -45,46 +46,64 @@ export class AddScoreComponent implements OnInit {
     private teacherService: TeacherService,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService
+    private localstorageService: LocalstorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      params['subjectID'];
-
-      this._kelasInit([params['subjectID']]);
-      this._subjectInit([params['subjectID']]);
-      this._studentInit([params['subjectID']]);
-      this.idSubject = params['subjectID'];
+    this._parentInit();
+    setTimeout(() => {
+      console.log('this.subjectsData', this.subjectsData);
+      this.route.params.subscribe((params) => {
+        if (this.subjectsData?.includes(params['subjectID'])) {
+          this._kelasInit([params['subjectID']]);
+          this._subjectInit([params['subjectID']]);
+          this._studentInit([params['subjectID']]);
+          this.idSubject = params['subjectID'];
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+  private _parentInit() {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.teacherService.getTeacherByID(this.idUser).subscribe((res) => {
+      this.subjectsData = res.Subject?.map(
+        (el: {
+          _id?: string;
+          id?: string;
+          subject_name?: string;
+          teacher_id?: string;
+          duration?: string;
+        }) => {
+          return el.id;
+        }
+      );
     });
   }
 
   private _subjectInit(idSubject: any) {
-    this.spinner.show();
     this.subjectService.getSubjectByID(idSubject).subscribe(
       (res) => {
         this.dataSubject = res;
       },
       () => {},
-      () => {
-        this.spinner.hide();
-      }
+      () => {}
     );
   }
   private _kelasInit(idSubject: any) {
-    this.spinner.show();
     this.kelasService.getClassBySubject(idSubject).subscribe(
       (res) => {
         this.infoKelas = res[0];
       },
       () => {},
-      () => {
-        this.spinner.hide();
-      }
+      () => {}
     );
   }
   private _studentInit(id: any) {
-    this.spinner.show();
     this.studentService.getAllStudentBySubject(id).subscribe(
       (res) => {
         res.forEach((hes) => {
@@ -103,9 +122,7 @@ export class AddScoreComponent implements OnInit {
         this.studentData = this.studentData1;
       },
       () => {},
-      () => {
-        this.spinner.hide();
-      }
+      () => {}
     );
     this.studentData2 = this.studentData1;
   }
@@ -115,7 +132,6 @@ export class AddScoreComponent implements OnInit {
   }
 
   submit() {
-    this.spinner.show();
     this.teacherService
       .setStudentScore(this.idSubject, this.studentData2)
       .subscribe(
@@ -126,9 +142,7 @@ export class AddScoreComponent implements OnInit {
           });
         },
         () => {},
-        () => {
-          this.spinner.hide();
-        }
+        () => {}
       );
 
     window.location.reload();

@@ -1,19 +1,27 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
+import { AuthorizationService } from '../../services/authorization.service';
+import { LocalstorageService } from '../../services/localstorage.service';
 import { TeacherService } from '../../services/teacher.service';
 
 @Component({
   selector: 'teacher-sidenav',
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  styleUrls: ['./sidenav.component.css'],
 })
 export class SidenavComponent implements OnInit {
-  opened=false;
+  opened = false;
   showProfile = false;
   showInfo = false;
   showProfile2 = false;
   showProfile3 = false;
-  constructor(private teacherService: TeacherService) { }
+  idUser?: string;
+
+  constructor(
+    private teacherService: TeacherService,
+    private localstorageService: LocalstorageService,
+    private authorizationService: AuthorizationService
+  ) {}
   subject?: any[] = [
     {
       _id: '',
@@ -27,14 +35,18 @@ export class SidenavComponent implements OnInit {
     this._teacherInit();
   }
   private _teacherInit() {
-    this.teacherService
-      .getTeacherByID('61d6f6a79d85b51c80471723')
-      .subscribe((res) => {
-        this.subject = res.Subject;
-        console.log('HASIL : ', this.subject);
-      });
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.teacherService.getTeacherByID(this.idUser).subscribe((res) => {
+      this.subject = res.Subject;
+      console.log('HASIL : ', this.subject);
+    });
   }
   goToLink(idSubject: any) {
     window.location.href = `/add-score/${idSubject}`;
+  }
+  logoutUser() {
+    this.authorizationService.logout();
   }
 }
