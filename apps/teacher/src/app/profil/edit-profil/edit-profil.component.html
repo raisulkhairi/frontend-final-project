@@ -6,7 +6,7 @@
     <div class="photo">
       <div class="container-profil">
         <img
-          [src]="imageDisplay ? imageDisplay : imageStudent"
+          [src]="imageDisplay ? imageDisplay : imageTeacher"
           alt=""
           style="width: 200px"
           class="photo-profil"
@@ -138,9 +138,9 @@
           id="password"
           name="password"
         />
-      </form>
+      </form> 
       <br />
-      <input type="submit" (click)="editStudent()" value="Edit Student Data" />
+      <input type="submit" (click)="editTeacher()" value="Edit Student Data" />
     </div>
   </div>
 </div>
