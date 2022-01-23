@@ -24,3 +24,12 @@
 span {
   color: #cd3a0e;
 }
+.title-dashboard{
+  text-align: center;
+  font-size: 40px;
+  margin: 30px 0;
+  font-weight: 300;
+  letter-spacing: 6px;
+  font-family: sans-serif;
+  color: #666666;
+}

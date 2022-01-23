@@ -15,6 +15,8 @@ export class EditProfilComponent implements OnInit {
   formImage!: FormGroup;
   imageTeacher: any;
   imageDisplay: any;
+  selectedReligion?:any
+  religionValue?:string
   constructor(
     private teacherService: TeacherService,
     private formBuilder: FormBuilder
