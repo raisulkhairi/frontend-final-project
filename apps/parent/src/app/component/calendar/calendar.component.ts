@@ -52,7 +52,7 @@ export class CalendarComponent implements OnInit {
         dayMaxEvents: true,
         eventClick: this.handleEventClick.bind(this),
       };
-    }, 1000);
+    }, 2000);
   }
 
   // Id Student didapat dari token
