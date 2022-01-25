@@ -49,6 +49,8 @@ export class HomeRoomPanelComponent implements OnInit {
           this.subjectList = this.students[0].subject?.map((el) => {
             return el.subject_name?.subject_name;
           });
+
+          console.log('SUbject List ', this.subjectList);
         });
 
       this.kelasService.getAllClass().subscribe((res) => {

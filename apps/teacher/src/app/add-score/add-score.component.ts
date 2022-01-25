@@ -53,7 +53,6 @@ export class AddScoreComponent implements OnInit {
   ngOnInit(): void {
     this._parentInit();
     setTimeout(() => {
-      console.log('this.subjectsData', this.subjectsData);
       this.route.params.subscribe((params) => {
         if (this.subjectsData?.includes(params['subjectID'])) {
           this._kelasInit([params['subjectID']]);

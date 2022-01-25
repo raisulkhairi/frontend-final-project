@@ -60,6 +60,8 @@ export class CalendarComponent implements OnInit {
     const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
     this.idUser = decodedToken.id;
     this.scheduleService.getScheduleByStudent(this.idUser).subscribe((data) => {
+      console.log('EVENTS : ', data);
+
       this.events.push(data);
     });
   }
