@@ -54,4 +54,23 @@ export class StudentService {
       `${port}/api/student/getAllStudentRelatedToTheClass/${id}`
     );
   }
+  getAllStudentByRankByClass(id: any): Observable<
+    {
+      _id?: string;
+      first_name?: string;
+      last_name?: string;
+      totalScore?: string;
+      id?: string;
+    }[]
+  > {
+    return this.http.get<
+      {
+        _id?: string;
+        first_name?: string;
+        last_name?: string;
+        totalScore?: string;
+        id?: string;
+      }[]
+    >(`${port}/api/student/getStudentsByRankByClass/${id}`);
+  }
 }

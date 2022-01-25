@@ -1,21 +1,11 @@
 /* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { kelas } from '../../models/kelas';
-import { Student } from '../../models/student';
 import { StudentService } from '../../services/student.service';
 
 // TABLE
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-
-interface IPost {
-  id: string;
-  nama?: string;
-  'Fisika 1'?: string;
-  'Fisika 2'?: string;
-  'Fisika 3'?: string;
-}
 
 @Component({
   selector: 'headmaster-class-by-score',
@@ -25,33 +15,18 @@ interface IPost {
 export class ClassByScoreComponent implements OnInit {
   @Input() public parentData: any;
   student: any[] = [];
-  kelas: kelas[] = [];
-  studentData_1 = {};
-  tempSubject: any[];
-
-  // Table
-  dataSource: MatTableDataSource<IPost>;
-  posts: IPost[] = [];
+  dataSource: MatTableDataSource<any>;
+  posts: any[] = [];
   columns: string[] = [];
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private studentService: StudentService) {}
 
   ngOnInit(): void {
-    // this.columns = ['id', 'nama', 'Fisika 1', 'Fisika 2', 'Fisika 3'];
-    this.posts = [
-      {
-        id: '1',
-        nama: 'Oscar',
-        'Fisika 1': '89',
-        'Fisika 2': '99',
-        'Fisika 3': '',
-      },
-    ];
-
     this.studentService
-      .getAllStudentRelatedToTheClass('61dd65db591ae97754b4065c')
+      .getAllStudentRelatedToTheClass(this.parentData)
       .subscribe((result) => {
         this.student = result;
         console.log(this.student[0]);
@@ -61,14 +36,9 @@ export class ClassByScoreComponent implements OnInit {
           this.columns.push(element.subject_name.subject_name);
         });
         this.student.forEach((el) => {
-          let testData = {};
-
-          console.log('id : ', el._id);
-          console.log('nama : ', el.first_name);
-
+          const testData = {};
           testData['id'] = el._id;
-          testData['nama'] = el.first_name;
-
+          testData['nama'] = el.first_name + ' ' + el.last_name;
           el.subject.forEach((element) => {
             const tempData = {};
             for (const [key, value] of Object.entries(element)) {
@@ -78,23 +48,15 @@ export class ClassByScoreComponent implements OnInit {
                 tempData['score_subject'] = value;
               }
             }
-
-            console.log(
-              `${tempData['subject_name']}` + ' - ' + tempData['score_subject']
-            );
-
             testData[`${tempData['subject_name']}`] = tempData['score_subject'];
           });
-          console.log('TEST DATA : ', testData);
-          // this.posts.push(testData);
+          this.posts.push(testData);
         });
-
-        console.log('');
       });
-
-    this.dataSource = new MatTableDataSource(this.posts);
-
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => {
+      this.dataSource = new MatTableDataSource(this.posts);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }, 1000);
   }
 }
