@@ -38,11 +38,13 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatMenuModule} from '@angular/material/menu';
 
 const MaterialComponents = [
   MatButtonModule,
   MatIconModule,
   MatDialogModule,
+  MatMenuModule,
   MatFormFieldModule,
   MatSidenavModule,
   MatListModule,
