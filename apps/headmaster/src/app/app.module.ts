@@ -70,6 +70,9 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuardService],
+    data: {
+      role: 'headmaster',
+    },
     component: ShellComponent,
     children: [
       {

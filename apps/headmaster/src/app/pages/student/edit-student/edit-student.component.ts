@@ -131,6 +131,12 @@ export class EditStudentComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    let idKelas;
+    this.classData.map((el) => {
+      if (el.class_name == this.selectedClass) {
+        idKelas = el._id;
+      }
+    });
 
     const studentData: Student = {
       first_name: this.studentForm['first_name'].value,
@@ -144,7 +150,7 @@ export class EditStudentComponent implements OnInit {
       blood_group: this.studentForm['blood_group'].value,
       religion: this.studentForm['religion'].value,
       addmission_date: this.studentForm['addmission_date'].value,
-      kelas: this.studentForm['kelas'].value,
+      kelas: idKelas,
       address: this.studentForm['address'].value,
       phone: this.studentForm['phone'].value,
       short_bio: this.studentForm['short_bio'].value,
