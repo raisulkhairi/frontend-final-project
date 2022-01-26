@@ -50,6 +50,9 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuardService],
+    data: {
+      role: 'parent',
+    },
     component: ShellComponent,
     children: [
       {

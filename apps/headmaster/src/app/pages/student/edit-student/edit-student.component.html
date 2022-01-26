@@ -284,11 +284,11 @@
           >*Addmission Date is required</small
         >
 
-        <label for="kelas">Kelas : </label>
-        <span> {{ currentClass }}</span>
+        <label for="kelas">Kelas </label>
+        <!-- <span> {{ currentClass }}</span> -->
         <!-- <input formControlName="kelas" type="text" id="kelas" name="kelas" /> -->
         <select formControlName="kelas" [(ngModel)]="selectedClass">
-          <option value="{{ kel._id }}" *ngFor="let kel of classData">
+          <option value="{{ kel.class_name }}" *ngFor="let kel of classData">
             {{ kel.class_name }}
           </option>
         </select>
