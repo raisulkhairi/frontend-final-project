@@ -85,7 +85,7 @@
           name="father_name"
         />
         <small *ngIf="studentForm['father_name'].invalid && isSubmitted"
-          >*Date of birth is required</small
+          >*Father Name is required</small
         >
         <label for="mother_name">Mother Name</label>
         <input
@@ -95,7 +95,7 @@
           name="mother_name"
         />
         <small *ngIf="studentForm['mother_name'].invalid && isSubmitted"
-          >*Date of birth is required</small
+          >*Mother Name is required</small
         >
 
         <label for="date_of_birth">Date of Birth</label>
@@ -119,7 +119,7 @@
           name="father_occupation"
         />
         <small *ngIf="studentForm['father_occupation'].invalid && isSubmitted"
-          >*Date of birth is required</small
+          >*Father Occupation required</small
         >
 
         <label for="blood_group">Blood Group</label>
@@ -193,8 +193,8 @@
           name="short_bio"
         />
 
-        <small *ngIf="studentForm['phone'].invalid && isSubmitted"
-          >*Phone is required</small
+        <small *ngIf="studentForm['short_bio'].invalid && isSubmitted"
+          >*Short Bio is required</small
         >
 
         <!-- <label for="password">Password</label>

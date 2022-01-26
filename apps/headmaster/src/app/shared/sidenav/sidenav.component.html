@@ -1,0 +1,114 @@
+<mat-sidenav-container class="d-md-block side-navbar">
+  
+  <mat-sidenav #sidenav opened mode="side">
+    <div class="title">
+      <div class="logo">
+        <img
+          src="https://1.bp.blogspot.com/-xIkvr4n2wEI/YNar8NwrMzI/AAAAAAAAFjM/2ThacZ35jXsa3fzsFgUvPgGX4uTQCR7dgCLcBGAsYHQ/512%2Blogo%2Bnew.png"
+          width="150"
+        />
+      </div>
+    </div>
+    <ul class="list nav">
+      <li>
+        <a routerLink="dashboard" class="nav-link"
+          ><i class="fas dashboard fa-house-user"></i> Dashboard</a
+        >
+      </li>
+
+      <li>
+        <a (click)="showTeacher = !showTeacher" class="nav-link"
+          >Teacher</a
+        >
+      </li>
+      <div class="submenu">
+        <li><a *ngIf="showTeacher" routerLink="/teacher">Teacher List</a></li>
+        <li>
+          <a *ngIf="showTeacher" routerLink="/addteacher"> Add Teacher</a>
+        </li>
+      </div>
+
+      <li>
+        <a (click)="showStudent = !showStudent" class="nav-link"
+          > Student</a
+        >
+      </li>
+      <div class="submenu">
+        <li><a *ngIf="showStudent" routerLink="/student">Student List</a></li>
+        <li>
+          <a *ngIf="showStudent" routerLink="/addstudent"> Add Student</a>
+        </li>
+      </div>
+
+      <li>
+        <a (click)="showParent = !showParent" class="nav-link"
+          >Parent</a
+        >
+      </li>
+      <div class="submenu">
+        <li><a *ngIf="showParent" routerLink="/parent">Parent List</a></li>
+        <li><a *ngIf="showParent" routerLink="/addparent"> Add Parent</a></li>
+      </div>
+
+      <li>
+        <a (click)="showClass = !showClass" class="nav-link"
+          >Class</a
+        >
+      </li>
+      <li><a *ngIf="showClass" routerLink="/class">All Classes</a></li>
+      <li><a *ngIf="showClass" routerLink="/addclass"> Add New Class</a></li>
+
+      <li>
+        <a routerLink="/subject" class="nav-link"
+          >Subjects</a
+        >
+      </li>
+
+      <li>
+        <a routerLink="/schedule" class="nav-link"
+          >Schedule</a
+        >
+      </li>
+
+      <li>
+        <a routerLink="/academicyear" class="nav-link"
+          >Academic Year</a
+        >
+      </li>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="row">
+    <mat-toolbar>
+      <button mat-icon-button color="black" aria-label="Example icon button with a menu icon" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      
+    <h1 class="text-center col-11">ADMINISTRATOR</h1>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+    
+    
+      <!-- <div class="menu">
+        <button
+          class="fa fa-bars"
+          aria-hidden="true"
+          (click)="sidenav.toggle()"
+        >
+          Open
+        </button>
+      </div>
+      <h1 class="col-11 text-center">Administrator</h1> -->
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
