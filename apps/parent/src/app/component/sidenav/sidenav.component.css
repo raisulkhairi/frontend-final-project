@@ -54,3 +54,20 @@ mat-sidenav-content.mat-drawer-content.mat-sidenav-content {
   cursor: pointer;
   color: blue;
 }
+.bg-image {
+  background-image: url('/assets/images/school.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100%;
+  filter: blur(5px);
+}
+.content-page{
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.router-page {
+  overflow: auto;
+  height: 89vh;
+}

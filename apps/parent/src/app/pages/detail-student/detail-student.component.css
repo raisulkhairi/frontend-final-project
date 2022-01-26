@@ -1,7 +1,7 @@
 /*  */
 .box-name {
   display: flex;
-  margin-right: 35px;
+  margin: 10px 20px;
 }
 
 .box-detail {
@@ -11,9 +11,11 @@
   background: #ffff;
   border-radius: 10px;
   box-shadow: 4px 4px #bebebe;
+  padding-bottom: 20px;
 }
 .profil {
   align-items: center;
+  max-width: 160px;
 }
 .name-profil {
   height: max-content;
@@ -26,8 +28,9 @@
   margin-bottom: 100px;
 }
 .photo img {
-  width: 155px;
-  height: auto;
+  max-width: 190px;
+  max-height: 188px;
+  clip-path: circle();
 }
 .name1 {
   width: 155px;
@@ -36,9 +39,18 @@
   letter-spacing: 1px;
 }
 .photo {
-  margin: 35px;
+  margin: 40px 0;
+  max-width: 160px;
+  min-width: 160px;
+  height: auto;
 }
 .edit {
   float: right;
   margin: 20px;
+}
+.title {
+  text-align: center;
+  font-size: 40px;
+  margin: 38px;
+  color: #ffffffa3;
 }

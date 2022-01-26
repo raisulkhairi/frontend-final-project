@@ -17,13 +17,13 @@ img {
 .title-dashboard {
   font-size: 35px;
   margin: 20px;
-  color: #454545;
+  color: #ffffffa3;
   letter-spacing: 2px;
   font-family: sans-serif;
 }
 .box-mykid.ng-star-inserted {
   /* border: 1px solid red; */
-  background: #d4d4d4;
+  background: transparent;
   border-radius: 10px;
   display: flex;
   padding: 15px;
@@ -82,15 +82,15 @@ button {
 .title-mykid {
   font-size: 40px;
   font-weight: 300;
-  color: #454545;
+  color: #ffffffa3;
   margin: 40px 0;
   font-family: sans-serif;
   letter-spacing: 5px;
   text-align: center;
 }
 .container {
-  background: white;
+  /* background: white;
   border-radius: 10px;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #c5c5c5; */
   margin-top: 20px;
 }

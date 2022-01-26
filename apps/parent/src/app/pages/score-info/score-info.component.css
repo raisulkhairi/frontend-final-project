@@ -2,7 +2,7 @@
   border: 1px solid #b8b8b8;
   background: #ffff;
   border-radius: 10px;
-  min-height: 80vh;
+  min-height: 70vh;
 }
 .title-score {
   text-align: center;
@@ -11,5 +11,5 @@
   font-weight: 300;
   letter-spacing: 6px;
   font-family: sans-serif;
-  color: #454545;
+  color: #ffffffa3;
 }
