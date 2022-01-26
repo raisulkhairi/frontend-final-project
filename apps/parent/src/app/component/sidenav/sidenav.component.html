@@ -49,11 +49,21 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar>
-      <div class="menu">
-        <i class="fa fa-bars" aria-hidden="true" (click)="sidenav.toggle()"></i>
+    <div class="bg-image"></div>
+    <div class="content-page">
+      <mat-toolbar>
+        <div class="menu">
+          <i
+            class="fa fa-bars"
+            aria-hidden="true"
+            (click)="sidenav.toggle()"
+          ></i>
+        </div>
+      </mat-toolbar>
+      <div class="router-page">
+        <router-outlet></router-outlet>
       </div>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
+      
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
