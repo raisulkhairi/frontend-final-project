@@ -9,12 +9,20 @@ tr.mat-footer-row {
   margin: 30px 0;
   height: 100%;
 }
-.title-score{
+.title-score {
   text-align: center;
   font-size: 40px;
+  margin: 38px;
+  color: #ffffffa3;
+}
+.mat-table {
+  background: none;
+  border-radius: 10px;
+}
+.wrapper {
   margin: 30px 0;
-  font-weight: 300;
-  letter-spacing: 6px;
-  font-family: sans-serif;
-  color: #666666;
+  height: 100%;
+  background: #ffff;
+  padding: 2px;
+  border-radius: 10px;
 }

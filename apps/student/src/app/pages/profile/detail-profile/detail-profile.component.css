@@ -50,9 +50,6 @@ img.photo-profil {
 .title-profil{
   text-align: center;
   font-size: 40px;
-  margin: 30px 0;
-  font-weight: 300;
-  letter-spacing: 6px;
-  font-family: sans-serif;
-  color: #666666;
+  margin: 38px;
+  color: #ffffffa3;
 }
