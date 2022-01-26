@@ -1,6 +1,7 @@
 img {
   clip-path: circle();
   max-height: 200px;
+  max-height: 145px;
 }
 .bio {
   display: flex;
@@ -36,6 +37,7 @@ img {
   padding: 10px;
   height: max-content;
   box-shadow: 4px 4px #999999;
+  min-width: 260px;
 }
 .photo {
   margin: 10px;
