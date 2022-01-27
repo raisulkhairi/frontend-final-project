@@ -16,8 +16,7 @@ export class KelasServices {
     return this.http.get<kelas[]>(`${port}/api/class`);
   }
 
-  AddClass(data: any): Observable<any> {
-    console.log('data:', data);
-    return this.http.post<any>(`${port}/api/class`, data);
+  AddClass(data: any): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${port}/api/class`, data);
   }
 }

@@ -65,6 +65,7 @@ export class CalendarComponent implements OnInit {
 
   private _eventInit() {
     this.scheduleService.getAllSchedule().subscribe((data) => {
+      console.log('data', data);
       this.events.push(data);
     });
   }

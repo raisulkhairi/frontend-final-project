@@ -9,7 +9,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { LocalstorageService } from '../../../services/localstorage.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'headmaster-edit-teacher',
   templateUrl: './edit-teacher.component.html',
@@ -28,21 +28,39 @@ export class EditTeacherComponent implements OnInit {
   selectedBloodGroup?: any;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  teachersId: string[] = [];
+
   constructor(
     private teacherService: TeacherService,
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idUser = [params['idTeacher']];
-    });
-
+    this._checkTeacher();
     this._teachertInit();
     this._teacherImageInit();
-    this.teacherEditForm(this.idUser[0]);
+
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idUser = [params['idTeacher']];
+        if (this.teachersId?.includes(this.idUser[0])) {
+          this.teacherEditForm(this.idUser[0]);
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+
+  private _checkTeacher() {
+    this.teacherService.getAllTeacher().subscribe((res) => {
+      this.teachersId = res.map((element) => {
+        return element._id;
+      });
+    });
   }
 
   private _teachertInit() {
@@ -122,15 +140,23 @@ export class EditTeacherComponent implements OnInit {
 
     this.teacherService
       .editTeacherByHeadmaster(this.idUser[0], teacherData)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   submitImage() {
@@ -141,15 +167,23 @@ export class EditTeacherComponent implements OnInit {
 
     this.teacherService
       .editTeacherImageByHeadmaster(this.idUser[0], imageTeacher)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get teacherForm() {

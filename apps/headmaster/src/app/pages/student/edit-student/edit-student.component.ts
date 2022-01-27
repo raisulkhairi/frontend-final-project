@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../../../models/student';
 import { KelasServices } from '../../../services/kelas.service';
 import { StudentService } from '../../../services/student.service';
@@ -35,22 +35,40 @@ export class EditStudentComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   classData?: kelas[];
   currentClass?: string;
+  studentsId: string[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private studentService: StudentService,
     private kelasService: KelasServices,
     private _snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idStudent = [params['idStudent']];
-    });
     this._kelasInit();
     this._studentInit();
     this._studentImageInit();
-    this.studentEditForm(this.idStudent[0]);
+    this._checkStudent();
+
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idStudent = [params['idStudent']];
+        if (this.studentsId?.includes(this.idStudent[0])) {
+          this.studentEditForm(this.idStudent[0]);
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+  private _checkStudent() {
+    this.studentService.getAllStudent().subscribe((res) => {
+      this.studentsId = res.map((element) => {
+        return element._id;
+      });
+    });
   }
 
   private _studentInit() {
@@ -160,15 +178,23 @@ export class EditStudentComponent implements OnInit {
 
     this.studentService
       .editStudentByHeadmaster(this.idStudent, studentData)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   submitImage() {
@@ -179,15 +205,23 @@ export class EditStudentComponent implements OnInit {
 
     this.studentService
       .editStudentImageByHeadmaster(this.idStudent, imageStudent)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get studentForm() {
