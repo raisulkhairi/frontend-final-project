@@ -20,6 +20,7 @@ export class Teacher {
   };
   Subject?: [
     {
+      _id?: string;
       subject_name?: string;
     }
   ];

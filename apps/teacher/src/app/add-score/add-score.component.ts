@@ -39,6 +39,7 @@ export class AddScoreComponent implements OnInit {
   tempData?: ScoreInterface;
   idUser?: string;
   subjectsData?: any[];
+  relatedSubject: string[] = [];
   constructor(
     private studentService: StudentService,
     private subjectService: SubjectService,
@@ -51,21 +52,32 @@ export class AddScoreComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._parentInit();
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        if (this.subjectsData?.includes(params['subjectID'])) {
-          this._kelasInit([params['subjectID']]);
-          this._subjectInit([params['subjectID']]);
-          this._studentInit([params['subjectID']]);
-          this.idSubject = params['subjectID'];
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 500);
+    this.route.params.subscribe((params) => {
+      this.idSubject = params['subjectID'];
+    });
+    this._teacherInit();
+    this._checkSubjectInit();
   }
-  private _parentInit() {
+
+  private _checkSubjectInit() {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.teacherService.getTeacherByID(this.idUser).subscribe((res) => {
+      res.Subject?.forEach((el: any) => {
+        this.relatedSubject.push(el._id);
+      });
+      if (!this.relatedSubject?.includes(this.idSubject)) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this._kelasInit(this.idSubject);
+        this._subjectInit(this.idSubject);
+        this._studentInit(this.idSubject);
+      }
+    });
+  }
+
+  private _teacherInit() {
     const token = this.localstorageService.getToken();
     const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
     this.idUser = decodedToken.id;

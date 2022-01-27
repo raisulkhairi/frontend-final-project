@@ -36,8 +36,15 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       initialView: 'timeGridWeek',
     };
+  }
 
-    setTimeout(() => {
+  // Id Student didapat dari token
+  private _eventInit() {
+    const token = this.localstorageService.getToken();
+    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
+    this.idUser = decodedToken.id;
+    this.scheduleService.getScheduleByStudent(this.idUser).subscribe((data) => {
+      this.events.push(data);
       this.calendarOptions = {
         headerToolbar: {
           left: 'prev,next today',
@@ -51,18 +58,6 @@ export class CalendarComponent implements OnInit {
         dayMaxEvents: true,
         eventClick: this.handleEventClick.bind(this),
       };
-    }, 1000);
-  }
-
-  // Id Student didapat dari token
-  private _eventInit() {
-    const token = this.localstorageService.getToken();
-    const decodedToken = JSON.parse(atob(token?.split('.')[1] || ''));
-    this.idUser = decodedToken.id;
-    this.scheduleService.getScheduleByStudent(this.idUser).subscribe((data) => {
-      console.log('EVENTS : ', data);
-
-      this.events.push(data);
     });
   }
 

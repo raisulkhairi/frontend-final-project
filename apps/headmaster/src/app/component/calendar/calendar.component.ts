@@ -39,8 +39,12 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       initialView: 'timeGridWeek',
     };
+  }
 
-    setTimeout(() => {
+  private _eventInit() {
+    this.scheduleService.getAllSchedule().subscribe((data) => {
+      console.log('data', data);
+      this.events.push(data);
       //full calendar setting and event binding
       this.calendarOptions = {
         headerToolbar: {
@@ -60,13 +64,6 @@ export class CalendarComponent implements OnInit {
         // eventsSet: this.handleEvents.bind(this),
         progressiveEventRendering: true,
       };
-    }, 2000);
-  }
-
-  private _eventInit() {
-    this.scheduleService.getAllSchedule().subscribe((data) => {
-      console.log('data', data);
-      this.events.push(data);
     });
   }
   private _kelasInit() {

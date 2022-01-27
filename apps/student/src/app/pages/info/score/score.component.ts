@@ -45,10 +45,8 @@ export class ScoreComponent implements OnInit {
           score: parseInt(el.score_subject),
         });
       });
-      console.log(this.grades2);
-    });
-    setTimeout(() => {
+      // console.log(this.grades2);
       this.grades = this.grades2;
-    }, 1000);
+    });
   }
 }

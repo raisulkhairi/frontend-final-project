@@ -34,18 +34,10 @@ export class ScoreInfoComponent implements OnInit {
   children2?: any[];
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.idStudent = params['idStudent'];
+    });
     this._parentInit();
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        params['idStudent'];
-        if (this.children.includes(params['idStudent'])) {
-          this.idStudent = params['idStudent'];
-          this._studentInit(this.idStudent);
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 500);
   }
   private _parentInit() {
     const token = this.localstorageService.getToken();
@@ -56,6 +48,11 @@ export class ScoreInfoComponent implements OnInit {
         this.children.push(el._id.toString());
       });
       this.children2 = this.children;
+      if (!this.children.includes(this.idStudent)) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this._studentInit(this.idStudent);
+      }
     });
   }
 
