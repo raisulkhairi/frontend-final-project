@@ -108,15 +108,23 @@ export class AddParentComponent implements OnInit {
         parentData.append(key, this.parentForm[key].value);
       }
     });
-    this.parentService.AddParent(parentData).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.parentService.AddParent(parentData).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   uploadImage(event: any) {

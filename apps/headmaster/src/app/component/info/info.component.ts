@@ -52,7 +52,6 @@ export class InfoComponent implements OnInit {
           const sec = tt[0] * 3600 + tt[1] * 60;
           this.info.endTime = new Date(sec * 1000).toISOString().substr(11, 5);
         }
-        console.log('indo info : ', this.info);
       });
   }
 }

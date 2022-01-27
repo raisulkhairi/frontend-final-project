@@ -135,15 +135,23 @@ export class AddScoreComponent implements OnInit {
       .setStudentScore(this.idSubject, this.studentData2)
       .subscribe(
         (res) => {
-          this._snackBar.open('Jadwal Berhasil Dibuat', 'Close', {
+          this._snackBar.open('Score Berhasil Di Buat', 'Close', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
           });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         },
-        () => {},
-        () => {}
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
       );
-
-    window.location.reload();
   }
 }

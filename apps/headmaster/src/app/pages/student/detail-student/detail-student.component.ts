@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../../../models/student';
 import { StudentService } from '../../../services/student.service';
 
@@ -9,9 +9,11 @@ import { StudentService } from '../../../services/student.service';
   styleUrls: ['./detail-student.component.css'],
 })
 export class DetailStudentComponent implements OnInit {
+  studentsId: string[] = [];
   constructor(
     private studentService: StudentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   studentData: Student = {
@@ -80,11 +82,28 @@ export class DetailStudentComponent implements OnInit {
   idStudent: any;
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idStudent = [params['idStudent']];
-    });
-    this.studentService.getStudentById(this.idStudent[0]).subscribe((hasil) => {
-      this.studentData = hasil;
+    this._checkStudent();
+
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idStudent = [params['idStudent']];
+        if (this.studentsId?.includes(this.idStudent[0])) {
+          this.studentService
+            .getStudentById(this.idStudent[0])
+            .subscribe((hasil) => {
+              this.studentData = hasil;
+            });
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+  private _checkStudent() {
+    this.studentService.getAllStudent().subscribe((res) => {
+      this.studentsId = res.map((element) => {
+        return element._id;
+      });
     });
   }
 }

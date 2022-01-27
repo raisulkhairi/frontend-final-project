@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Teacher } from '../../../models/teacher';
 import { TeacherService } from '../../../services/teacher.service';
 
@@ -15,7 +15,8 @@ export class DetailTeacherComponent implements OnInit {
 
   constructor(
     private teacherService: TeacherService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   teacherData: Teacher = {
     _id: '',
@@ -42,12 +43,32 @@ export class DetailTeacherComponent implements OnInit {
       },
     ],
   };
+  teachersId: string[] = [];
+
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idUser = [params['idTeacher']];
-    });
-    this.teacherService.getTeacherByID(this.idUser[0]).subscribe((res) => {
-      this.teacherData = res;
+    this._checkTeacher();
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idUser = [params['idTeacher']];
+
+        if (this.teachersId?.includes(this.idUser[0])) {
+          this.teacherService
+            .getTeacherByID(this.idUser[0])
+            .subscribe((res) => {
+              this.teacherData = res;
+            });
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+
+  private _checkTeacher() {
+    this.teacherService.getAllTeacher().subscribe((res) => {
+      this.teachersId = res.map((element) => {
+        return element._id;
+      });
     });
   }
 }
