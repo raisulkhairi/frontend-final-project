@@ -20,6 +20,7 @@ export class ClassComponent implements OnInit {
   ngOnInit(): void {
     this.kelasService.getAllClass().subscribe((result) => {
       this.kelas = result;
+      console.log('HASIL : ', this.kelas);
     });
   }
 }

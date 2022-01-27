@@ -43,15 +43,23 @@ export class ForgetPasswordComponent implements OnInit {
     const newData_2 = {
       email: this.form?.value.email,
     };
-    this.parentService.resetPassword(newData_2).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.parentService.resetPassword(newData_2).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
   close() {
     this.dialogRef.close();

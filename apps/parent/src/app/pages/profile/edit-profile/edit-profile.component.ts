@@ -117,9 +117,8 @@ export class EditProfileComponent implements OnInit {
       // password: this.parentForm['password'].value,
     };
 
-    this.parentService
-      .editByParent(this.idUser, parentData)
-      .subscribe((res) => {
+    this.parentService.editByParent(this.idUser, parentData).subscribe(
+      (res) => {
         this._snackBar.open(res.message, '', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
@@ -127,7 +126,14 @@ export class EditProfileComponent implements OnInit {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-      });
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   submitImage() {
@@ -138,15 +144,23 @@ export class EditProfileComponent implements OnInit {
 
     this.parentService
       .editParentImageByParent(this.idUser, imageParent)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get parentForm() {

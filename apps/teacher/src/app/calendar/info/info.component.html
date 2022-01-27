@@ -11,6 +11,7 @@
     End : {{ info.end | date: 'fullDate' }}
     {{ info.end | date: 'shortTime' }}
   </h3>
+  <h3>Link : <a [href]="subject?.link">Akses Kelas</a></h3>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close (click)="close()">Close</button>

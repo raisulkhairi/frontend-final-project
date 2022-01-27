@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ParentService } from '../../../services/parent.service';
 import * as moment from 'moment';
 import {
@@ -30,7 +30,7 @@ export class EditParentComponent implements OnInit {
   filteredChildren: Observable<string[]>;
   children: string[] = [];
   allChildren: string[] = [];
-
+  parentsId: string[] = [];
   @ViewChild('childInput') childInput: ElementRef<HTMLInputElement>;
 
   form!: FormGroup;
@@ -41,7 +41,8 @@ export class EditParentComponent implements OnInit {
     private parentService: ParentService,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private router: Router
   ) {
     this.filteredChildren = this.childCtrl.valueChanges.pipe(
       startWith(null),
@@ -65,15 +66,31 @@ export class EditParentComponent implements OnInit {
   childInvalid = true;
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idParent = [params['idParent']];
-    });
-
-    this._childrenInit();
-
+    this._checkParent();
     this._parentInit();
     this._parentImageInit();
-    this.parentEditForm(this.idParent[0]);
+
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idParent = [params['idParent']];
+
+        if (this.parentsId?.includes(this.idParent[0])) {
+          this._childrenInit();
+
+          this.parentEditForm(this.idParent[0]);
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
+
+  private _checkParent() {
+    this.parentService.getAllParent().subscribe((res) => {
+      this.parentsId = res.map((element) => {
+        return element._id;
+      });
+    });
   }
 
   private _parentInit() {
@@ -171,15 +188,23 @@ export class EditParentComponent implements OnInit {
 
     this.parentService
       .editParentByHeadmaster(this.idParent[0], parentData)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   submitImage() {
@@ -189,15 +214,23 @@ export class EditParentComponent implements OnInit {
     });
     this.parentService
       .editParentImageByHeadmaster(this.idParent[0], imageParent)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get parentForm() {

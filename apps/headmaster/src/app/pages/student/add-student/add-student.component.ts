@@ -73,15 +73,23 @@ export class AddStudentComponent implements OnInit {
     Object.keys(this.studentForm).map((key) => {
       studentData.append(key, this.studentForm[key].value);
     });
-    this.studentService.AddStudent(studentData).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.studentService.AddStudent(studentData).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   uploadImage(event: any) {

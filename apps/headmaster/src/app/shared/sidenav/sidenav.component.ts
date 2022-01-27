@@ -37,6 +37,9 @@ export class SidenavComponent implements OnInit {
       this.showParent = false;
     }
     this.count1 %= 2;
+
+    this.count2 = 0;
+    this.count3 = 0;
   }
   openStudent() {
     this.count2++;
@@ -50,6 +53,8 @@ export class SidenavComponent implements OnInit {
       this.showParent = false;
     }
     this.count2 %= 2;
+    this.count1 = 0;
+    this.count3 = 0;
   }
   openParent() {
     this.count3++;
@@ -64,5 +69,7 @@ export class SidenavComponent implements OnInit {
     }
 
     this.count3 %= 2;
+    this.count1 = 0;
+    this.count2 = 0;
   }
 }
