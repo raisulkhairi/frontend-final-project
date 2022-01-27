@@ -67,36 +67,5 @@
 
   <mat-sidenav-content class="row">
 
-    <div class="bg-image"></div>
-    <div class="content-page">
-      <mat-toolbar>
-        <button
-          mat-icon-button
-          color="black"
-          aria-label="Example icon button with a menu icon"
-          (click)="sidenav.toggle()"
-        >
-          <mat-icon>menu</mat-icon>
-        </button>
 
-        <h1 class="text-center col-11">ADMINISTRATOR</h1>
-
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon button with a vertical three dot icon"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </mat-toolbar>
-      <div class="router-page">
-        <router-outlet></router-outlet>
-      </div>
-    </div>  
-  </mat-sidenav-content>
 </mat-sidenav-container>

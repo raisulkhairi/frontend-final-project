@@ -1,20 +1,43 @@
-<button mat-raised-button color="primary" (click)="openDialog1()">
-  Add Event
-</button>
+<div class="row">
+  <div class="col-md-6 col-lg-12 mb-4 mb-lg-0 my-2">
+    <div class="box bg-card p-3 mb-3 rounded-3">
+      <i class="uil-eye"></i>
+      <h3 class="text-cards text-center bg-text">Choose Class</h3>
+      <!-- <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" *ngFor="let kel of allClass">
+        <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btncheck1" (click)="scheduleFilter(kel._id)">Class {{
+          kel.class_name
+        }}</label>
+     </div> -->
+     <div class="d-flex justify-content-around my-3 bg-subcard rounded-3">
+      <div class="form-check form-check-inline my-1" *ngFor="let kel of allClass">
+        <input class="form-check-input " type="checkbox" id="inlineCheckbox1" value="option1">
+        <label class="form-check-label" for="inlineCheckbox1" class="bg-textcheck" (click)="scheduleFilter(kel._id)">Class {{
+          kel.class_name
+        }}</label>
+      </div>
+     </div>
+     
+     <div class="d-flex justify-content-around my-3 bg-subcard rounded-3">
+      <button mat-raised-button color="primary" (click)="openDialog1()">
+        Add Event
+      </button>
+      <button mat-raised-button color="primary" (click)="convertToPDF()">
+        convertToPDF
+      </button>
+     </div>
+    </div>
+  </div>
+</div>
 
-<mat-list>
-  <mat-list-item *ngFor="let kel of allClass">
-    <mat-checkbox color="primary" (click)="scheduleFilter(kel._id)">{{
-      kel.class_name
-    }}</mat-checkbox>
-  </mat-list-item>
-</mat-list>
-
-<full-calendar
+<div class="col-md-6 col-lg-12 mb-4 mb-lg-0">
+  <div class="box bg-card p-3 mb-3">
+    <full-calendar
   id="schedule"
   *ngIf="calendarVisible"
   [options]="calendarOptions"
 ></full-calendar>
-<button mat-raised-button color="primary" (click)="convertToPDF()">
-  convertToPDF
-</button>
+  </div>
+</div>
+
+
