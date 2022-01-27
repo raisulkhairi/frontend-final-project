@@ -68,3 +68,30 @@ form {
 .gender span {
   color: #212529;
 }
+.box-list {
+  border: 1px solid #656565;
+  width: 100vh;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: #00000014;
+  padding: 10px;
+}
+.box-kelas {
+  border: 1px solid #656565;
+  width: 100vh;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: #00000014;
+  padding: 10px;
+}
+.detail {
+  background: #2525be;
+  color: white;
+}
+.edit {
+  background: #007740;
+  color: white;
+  margin-left: 10px;
+}

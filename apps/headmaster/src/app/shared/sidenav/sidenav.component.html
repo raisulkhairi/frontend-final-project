@@ -13,12 +13,12 @@
     <ul class="list nav">
       <li>
         <a routerLink="dashboard" class="nav-link"
-          ><i class="fas dashboard fa-house-user"></i> Dashboard</a
+          ><img class="icon-list" src="assets/images/dashboard.png" alt=""> Dashboard</a
         >
       </li>
 
       <li>
-        <a (click)="showTeacher = !showTeacher" class="nav-link">Teacher</a>
+        <a (click)="showTeacher = !showTeacher" class="nav-link"><img class="icon-list" src="assets/images/teacher.png" alt="">Teacher</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showTeacher" routerLink="/teacher">Teacher List</a></li>
@@ -28,7 +28,7 @@
       </div>
 
       <li>
-        <a (click)="showStudent = !showStudent" class="nav-link"> Student</a>
+        <a (click)="showStudent = !showStudent" class="nav-link"><img class="icon-list" src="assets/images/student.png" alt=""> Student</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showStudent" routerLink="/student">Student List</a></li>
@@ -38,7 +38,7 @@
       </div>
 
       <li>
-        <a (click)="showParent = !showParent" class="nav-link">Parent</a>
+        <a (click)="showParent = !showParent" class="nav-link"><img class="icon-list" src="assets/images/parents.png" alt="">Parent</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showParent" routerLink="/parent">Parent List</a></li>
@@ -46,21 +46,21 @@
       </div>
 
       <li>
-        <a (click)="showClass = !showClass" class="nav-link">Class</a>
+        <a (click)="showClass = !showClass" class="nav-link"><img class="icon-list" src="assets/images/seminar.png" alt="">Class</a>
       </li>
       <li><a *ngIf="showClass" routerLink="/class">All Classes</a></li>
       <li><a *ngIf="showClass" routerLink="/addclass"> Add New Class</a></li>
 
       <li>
-        <a routerLink="/subject" class="nav-link">Subjects</a>
+        <a routerLink="/subject" class="nav-link"><img class="icon-list" src="assets/images/books.png" alt="">Subjects</a>
       </li>
 
       <li>
-        <a routerLink="/schedule" class="nav-link">Schedule</a>
+        <a routerLink="/schedule" class="nav-link"><img class="icon-list" src="assets/images/schedule.png" alt="">Schedule</a>
       </li>
 
       <li>
-        <a routerLink="/academicyear" class="nav-link">Academic Year</a>
+        <a routerLink="/academicyear" class="nav-link"><img class="icon-list" src="assets/images/graduate-hat.png" alt="">Academic Year</a>
       </li>
     </ul>
   </mat-sidenav>
@@ -68,158 +68,4 @@
   <mat-sidenav-content class="row">
 
 
-
-<!-- <mat-sidenav-container class="d-md-block side-navbar">
-  <mat-sidenav #sidenav opened mode="side">
-    <div class="title">
-      <div class="logo">
-        <img
-          src="https://1.bp.blogspot.com/-xIkvr4n2wEI/YNar8NwrMzI/AAAAAAAAFjM/2ThacZ35jXsa3fzsFgUvPgGX4uTQCR7dgCLcBGAsYHQ/512%2Blogo%2Bnew.png"
-          width="150"
-        />
-      </div>
-    </div>
-    <ul class="list nav">
-      <li>
-        <a routerLink="dashboard" class="nav-link"
-          ><i class="fas dashboard fa-house-user"></i> Dashboard</a
-
-        >
-          <mat-icon>menu</mat-icon>
-        </button>
-
-        <h1 class="text-center col-11">ADMINISTRATOR</h1>
-
-        <button
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon button with a vertical three dot icon"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </mat-toolbar>
-      <div class="router-page">
-        <router-outlet></router-outlet>
-      </div>
-    </div>  
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-
-
-<div class="page-wrapper chiller-theme toggled">
-  <a id="show-sidebar" class="btn btn-sm btn-dark">
-    <i class="fas fa-bars"></i>
-  </a>
-  <!-- Button  -->
-  
-  <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <a routerLink="/dashboard">Headmaster</a>
-        <div id="close-sidebar"><i class="fas fa-times"></i></div>
-      </div>
-      <!-- sidebar-brand -->
-      <div class="sidebar-header">
-        <div class="user-pic" style="color:#fff;">
-          <i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
-        </div>
-        <div class="user-info">
-          <span class="user-name"> <strong>Oscar</strong></span>
-          <span class="user-role">Administrator</span>
-          <span class="user-status"><i class="fa fa-circle"></i> <span>Online</span></span>
-        </div>
-      </div>
-      <!-- sidebar-header -->
-      
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu"><span>General</span></li>
-          <li><a routerLink="/dashboard"><i class="fa fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-          <li class="sidebar-dropdown">
-      <!-- dashboard -->
-            <a><i class="fa fa-tachometer-alt"></i><span>Student</span></a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li><a routerLink="/addstudent">Student Registration</a></li>
-                <li><a routerLink="/student">Student List</a></li>
-              </ul>
-            </div>
-          </li>
-          <!-- Student -->
-          <li class="sidebar-dropdown">
-            <a><i class="fa fa-shopping-cart"></i><span>Teacher</span></a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li><a routerLink="/addteacher">Teacher Registration</a></li>
-                <li><a routerLink="/teacher">Teacher List</a></li>
-              </ul>
-            </div>
-          </li>
-          <!-- teacher -->
-          <li class="sidebar-dropdown">
-            <a><i class="far fa-gem"></i><span>Parent</span></a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li><a routerLink="/addparent">Parent Registration</a></li>
-                <li><a routerLink="/parent">Parent</a></li>
-              </ul>
-            </div>
-          </li>
-          <!-- parent -->
-          <li class="sidebar-dropdown">
-            <a><i class="fa fa-chart-line"></i><span>Class</span></a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li><a routerLink="/addclass">Add New Class</a></li>
-                <li><a routerLink="/class">Class List</a></li>
-              </ul>
-            </div>
-          </li>
-          <!-- class -->
-          <li class="sidebar-dropdown">
-            <a routerLink="/subject"><i class="fa fa-globe"></i><span>Subject</span></a>
-          </li>
-          <!-- subject -->
-          <li class="sidebar-dropdown">
-            <a routerLink="/schedule"><i class="fa fa-globe"></i><span>Schedule</span></a>
-          </li>
-          <!-- schedule -->
-          <li class="sidebar-dropdown">
-            <a routerLink="/academicyear"><i class="fa fa-globe"></i><span>Academic Year</span></a>
-          </li>
-          <!-- academic year -->
-        </ul>
-      </div>
-      <!-- sidebar-menu  -->
-    </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
-    <!-- sidebar-footer  -->
-  </nav>
-  <!-- sidebar-wrapper  -->
-    
-  <main class="page-content">
-    <div>
-      <nav class="navbar-top">
-        <p class="navbar-text">SD Suka Maju</p>
-      </nav>
-    </div>
-
-    <div class="container">
-      
-      <router-outlet></router-outlet>
-    </div>
-  </main>
-  <!-- page-content" -->
-</div>
-<!-- page-wrapper" -->
-
+</mat-sidenav-container>

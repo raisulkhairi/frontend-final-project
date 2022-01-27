@@ -8,6 +8,8 @@
 #classess th {
   border: 1px solid #ddd;
   padding: 8px;
+  background: white;
+  text-align: center;
 }
 
 #classess tr:nth-child(even) {
@@ -24,4 +26,14 @@
   text-align: left;
   background-color: #04aa6d;
   color: white;
+  text-align: center;
+}
+.box-class{
+  border:1px solid;
+  width: max-content;
+  margin-top: 20px;
+}
+p {
+  font-size: 15px;
+  font-family: sans-serif;
 }

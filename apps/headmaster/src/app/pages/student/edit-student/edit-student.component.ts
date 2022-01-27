@@ -47,27 +47,25 @@ export class EditStudentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idStudent = [params['idStudent']];
+    });
+    this._checkStudent();
+
     this._kelasInit();
     this._studentInit();
     this._studentImageInit();
-    this._checkStudent();
-
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idStudent = [params['idStudent']];
-        if (this.studentsId?.includes(this.idStudent[0])) {
-          this.studentEditForm(this.idStudent[0]);
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 500);
   }
   private _checkStudent() {
     this.studentService.getAllStudent().subscribe((res) => {
       this.studentsId = res.map((element) => {
         return element._id;
       });
+      if (!this.studentsId?.includes(this.idStudent[0])) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.studentEditForm(this.idStudent[0]);
+      }
     });
   }
 
