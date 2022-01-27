@@ -56,8 +56,5 @@ export class ClassByScoreComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       });
-    // setTimeout(() => {
-      
-    // }, 1000);
   }
 }
