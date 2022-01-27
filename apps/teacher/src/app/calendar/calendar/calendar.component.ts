@@ -39,21 +39,6 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       initialView: 'timeGridWeek',
     };
-    setTimeout(() => {
-      this.calendarOptions = {
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'timeGridWeek,listWeek',
-        },
-        initialView: 'timeGridWeek',
-        events: this.events[0],
-        weekends: true,
-        selectMirror: true,
-        dayMaxEvents: true,
-        eventClick: this.handleEventClick.bind(this),
-      };
-    }, 1000);
   }
 
   // Id Teacher didapat dari token
@@ -64,6 +49,19 @@ export class CalendarComponent implements OnInit {
     this.scheduleService.getScheduleByTeacher(this.idUser).subscribe(
       (data) => {
         this.events.push(data);
+        this.calendarOptions = {
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'timeGridWeek,listWeek',
+          },
+          initialView: 'timeGridWeek',
+          events: this.events[0],
+          weekends: true,
+          selectMirror: true,
+          dayMaxEvents: true,
+          eventClick: this.handleEventClick.bind(this),
+        };
       },
       () => {},
       () => {}

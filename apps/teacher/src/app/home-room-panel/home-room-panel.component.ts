@@ -33,8 +33,6 @@ export class HomeRoomPanelComponent implements OnInit {
 
     this.teacherService.getTeacherByID(this.idUser).subscribe((res) => {
       this.teacherData = res;
-    });
-    setTimeout(() => {
       console.log(
         'this.teacherData.kelas._id.toString()',
         this.teacherData.kelas._id.toString()
@@ -61,6 +59,6 @@ export class HomeRoomPanelComponent implements OnInit {
           }
         });
       });
-    }, 500);
+    });
   }
 }
