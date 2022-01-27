@@ -37,8 +37,7 @@ select {
 input[type='date'].form-control {
   margin-left: 0;
 }
-form {
-  width: 70%;
+form { 
   margin: 0 auto;
 }
 .gender span {
@@ -48,14 +47,15 @@ form {
   color: black !important;
 }
 .save {
-  height: 60px;
-  width: 97px;
+  height: 40px;
+  width: 90px;
   margin: 0 11px;
-  align-items: center;
   text-align: center;
-  border-radius: 12px;
+  border-radius: 7px;
   background: #dda705;
   border: none;
+  padding: 9px 0;
+  font-family: sans-serif;
 }
 .reset {
   height: 60px;
@@ -83,4 +83,12 @@ small {
   display: block;
   margin-bottom: 10px;
   color: red;
+}
+.box-add-teacher{
+  border: 1px solid rgb(196, 196, 196);
+  width: 100vh;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
 }
