@@ -126,9 +126,8 @@ export class EditProfileComponent implements OnInit {
       password: this.studentForm['password'].value,
     };
 
-    this.studentService
-      .editStudent(this.idUser, studentData)
-      .subscribe((res) => {
+    this.studentService.editStudent(this.idUser, studentData).subscribe(
+      (res) => {
         this._snackBar.open(res.message, '', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
@@ -136,7 +135,14 @@ export class EditProfileComponent implements OnInit {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-      });
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   submitImage() {
@@ -147,15 +153,23 @@ export class EditProfileComponent implements OnInit {
 
     this.studentService
       .editStudentImageByStudent(this.idUser, imageStudent)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get studentForm() {

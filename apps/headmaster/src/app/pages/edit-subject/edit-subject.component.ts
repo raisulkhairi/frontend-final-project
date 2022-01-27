@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { subject } from '../../models/subject';
 import { Teacher } from '../../models/teacher';
 import { SubjectService } from '../../services/subject.service';
@@ -24,21 +24,36 @@ export class EditSubjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private teacherService: TeacherService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {}
   idSubject: any;
   isSubmitted = false;
   selectedTeacher?: string;
   teacherData?: Teacher[];
-
+  idSubjects: any[] = [];
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.idSubject = [params['idSubject']];
-    });
+    this._checkSubject();
     this._subjectInit();
     this._teacherInit();
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.idSubject = [params['idSubject']];
+        if (this.idSubjects?.includes(this.idSubject[0])) {
+          this.subjectEditForm(this.idSubject[0]);
+        } else {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }, 500);
+  }
 
-    this.subjectEditForm(this.idSubject[0]);
+  private _checkSubject() {
+    this.subjectService.getAllSubjects().subscribe((res) => {
+      this.idSubjects = res.map((el) => {
+        return el._id;
+      });
+    });
   }
 
   private _subjectInit() {
@@ -79,9 +94,8 @@ export class EditSubjectComponent implements OnInit {
       link: this.subjectForm['link'].value,
     };
 
-    this.subjectService
-      .editSubject(this.idSubject, subjectData)
-      .subscribe((res) => {
+    this.subjectService.editSubject(this.idSubject, subjectData).subscribe(
+      (res) => {
         this._snackBar.open(res.message, '', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
@@ -89,7 +103,14 @@ export class EditSubjectComponent implements OnInit {
         setTimeout(() => {
           window.location.reload();
         }, 1000);
-      });
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   get subjectForm() {
