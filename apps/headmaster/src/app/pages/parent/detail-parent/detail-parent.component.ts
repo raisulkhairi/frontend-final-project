@@ -19,18 +19,11 @@ export class DetailParentComponent implements OnInit {
   ) {}
   parentData: Parent;
   ngOnInit(): void {
-    this._checkParent();
-
     this.route.params.subscribe((params) => {
       this.idUser = [params['idParent']];
-      setTimeout(() => {
-        if (this.parentsId?.includes(this.idUser[0])) {
-          this._parentInit();
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      }, 1000);
     });
+    this._checkParent();
+    this._parentInit();
   }
 
   private _checkParent() {
@@ -38,6 +31,9 @@ export class DetailParentComponent implements OnInit {
       this.parentsId = res.map((element) => {
         return element._id;
       });
+      if (!this.parentsId?.includes(this.idUser[0])) {
+        this.router.navigate(['/not-found']);
+      }
     });
   }
 

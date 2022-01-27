@@ -13,12 +13,12 @@
     <ul class="list nav">
       <li>
         <a routerLink="dashboard" class="nav-link"
-          ><i class="fas dashboard fa-house-user"></i> Dashboard</a
+          ><img class="icon-list" src="assets/images/dashboard.png" alt=""> Dashboard</a
         >
       </li>
 
       <li>
-        <a (click)="showTeacher = !showTeacher" class="nav-link">Teacher</a>
+        <a (click)="showTeacher = !showTeacher" class="nav-link"><img class="icon-list" src="assets/images/teacher.png" alt="">Teacher</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showTeacher" routerLink="/teacher">Teacher List</a></li>
@@ -28,7 +28,7 @@
       </div>
 
       <li>
-        <a (click)="showStudent = !showStudent" class="nav-link"> Student</a>
+        <a (click)="showStudent = !showStudent" class="nav-link"><img class="icon-list" src="assets/images/student.png" alt=""> Student</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showStudent" routerLink="/student">Student List</a></li>
@@ -38,7 +38,7 @@
       </div>
 
       <li>
-        <a (click)="showParent = !showParent" class="nav-link">Parent</a>
+        <a (click)="showParent = !showParent" class="nav-link"><img class="icon-list" src="assets/images/parents.png" alt="">Parent</a>
       </li>
       <div class="submenu">
         <li><a *ngIf="showParent" routerLink="/parent">Parent List</a></li>
@@ -46,21 +46,21 @@
       </div>
 
       <li>
-        <a (click)="showClass = !showClass" class="nav-link">Class</a>
+        <a (click)="showClass = !showClass" class="nav-link"><img class="icon-list" src="assets/images/seminar.png" alt="">Class</a>
       </li>
       <li><a *ngIf="showClass" routerLink="/class">All Classes</a></li>
       <li><a *ngIf="showClass" routerLink="/addclass"> Add New Class</a></li>
 
       <li>
-        <a routerLink="/subject" class="nav-link">Subjects</a>
+        <a routerLink="/subject" class="nav-link"><img class="icon-list" src="assets/images/books.png" alt="">Subjects</a>
       </li>
 
       <li>
-        <a routerLink="/schedule" class="nav-link">Schedule</a>
+        <a routerLink="/schedule" class="nav-link"><img class="icon-list" src="assets/images/schedule.png" alt="">Schedule</a>
       </li>
 
       <li>
-        <a routerLink="/academicyear" class="nav-link">Academic Year</a>
+        <a routerLink="/academicyear" class="nav-link"><img class="icon-list" src="assets/images/graduate-hat.png" alt="">Academic Year</a>
       </li>
     </ul>
   </mat-sidenav>

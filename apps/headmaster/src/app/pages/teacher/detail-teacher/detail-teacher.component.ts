@@ -46,22 +46,10 @@ export class DetailTeacherComponent implements OnInit {
   teachersId: string[] = [];
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idUser = [params['idTeacher']];
+    });
     this._checkTeacher();
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idUser = [params['idTeacher']];
-
-        if (this.teachersId?.includes(this.idUser[0])) {
-          this.teacherService
-            .getTeacherByID(this.idUser[0])
-            .subscribe((res) => {
-              this.teacherData = res;
-            });
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 1000);
   }
 
   private _checkTeacher() {
@@ -69,6 +57,13 @@ export class DetailTeacherComponent implements OnInit {
       this.teachersId = res.map((element) => {
         return element._id;
       });
+      if (!this.teachersId?.includes(this.idUser[0])) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.teacherService.getTeacherByID(this.idUser[0]).subscribe((res) => {
+          this.teacherData = res;
+        });
+      }
     });
   }
 }

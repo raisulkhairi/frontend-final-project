@@ -82,28 +82,25 @@ export class DetailStudentComponent implements OnInit {
   idStudent: any;
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idStudent = [params['idStudent']];
+    });
     this._checkStudent();
-
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idStudent = [params['idStudent']];
-        if (this.studentsId?.includes(this.idStudent[0])) {
-          this.studentService
-            .getStudentById(this.idStudent[0])
-            .subscribe((hasil) => {
-              this.studentData = hasil;
-            });
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 1000);
   }
   private _checkStudent() {
     this.studentService.getAllStudent().subscribe((res) => {
       this.studentsId = res.map((element) => {
         return element._id;
       });
+      if (!this.studentsId?.includes(this.idStudent[0])) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.studentService
+          .getStudentById(this.idStudent[0])
+          .subscribe((hasil) => {
+            this.studentData = hasil;
+          });
+      }
     });
   }
 }

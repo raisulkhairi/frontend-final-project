@@ -39,20 +39,12 @@ export class EditTeacherComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idUser = [params['idTeacher']];
+    });
     this._checkTeacher();
     this._teachertInit();
     this._teacherImageInit();
-
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idUser = [params['idTeacher']];
-        if (this.teachersId?.includes(this.idUser[0])) {
-          this.teacherEditForm(this.idUser[0]);
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 1000);
   }
 
   private _checkTeacher() {
@@ -60,6 +52,11 @@ export class EditTeacherComponent implements OnInit {
       this.teachersId = res.map((element) => {
         return element._id;
       });
+      if (!this.teachersId?.includes(this.idUser[0])) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.teacherEditForm(this.idUser[0]);
+      }
     });
   }
 

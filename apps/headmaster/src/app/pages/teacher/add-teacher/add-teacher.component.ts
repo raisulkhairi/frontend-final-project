@@ -65,7 +65,7 @@ export class AddTeacherComponent implements OnInit {
         });
         setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 2000);
       },
       (err) => {
         this._snackBar.open(err.error.message, '', {

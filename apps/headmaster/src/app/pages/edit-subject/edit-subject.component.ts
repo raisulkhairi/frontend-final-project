@@ -33,19 +33,12 @@ export class EditSubjectComponent implements OnInit {
   teacherData?: Teacher[];
   idSubjects: any[] = [];
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idSubject = [params['idSubject']];
+    });
     this._checkSubject();
     this._subjectInit();
     this._teacherInit();
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idSubject = [params['idSubject']];
-        if (this.idSubjects?.includes(this.idSubject[0])) {
-          this.subjectEditForm(this.idSubject[0]);
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 1000);
   }
 
   private _checkSubject() {
@@ -53,6 +46,11 @@ export class EditSubjectComponent implements OnInit {
       this.idSubjects = res.map((el) => {
         return el._id;
       });
+      if (!this.idSubjects?.includes(this.idSubject[0])) {
+        this.router.navigate(['/not-found']);
+      } else {
+        this.subjectEditForm(this.idSubject[0]);
+      }
     });
   }
 

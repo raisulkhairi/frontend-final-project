@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  port: 'http://localhost:3000',
+  port: 'https://backend-final-project-salt.herokuapp.com',
 };
 
 /*
