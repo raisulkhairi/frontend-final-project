@@ -44,13 +44,11 @@ export class HomeRoomPanelComponent implements OnInit {
         .getAllStudentByClass(this.teacherData.kelas._id.toString())
         .subscribe((res) => {
           this.students = res;
-          console.log('murid',this.students)
-
           this.subjectList = this.students[0].subject?.map((el) => {
             return el.subject_name?.subject_name;
           });
 
-          console.log('SUbject List ', this.subjectList);
+          console.log('SUBEJCYT LIST : ', this.students[0]);
         });
 
       this.kelasService.getAllClass().subscribe((res) => {

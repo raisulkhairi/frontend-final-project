@@ -57,15 +57,23 @@ export class AddTeacherComponent implements OnInit {
       teacherData.append(key, this.teacherForm[key].value);
     });
 
-    this.teacherService.AddTeacher(teacherData).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.teacherService.AddTeacher(teacherData).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   uploadImage(event: any) {

@@ -117,15 +117,23 @@ export class EditProfilComponent implements OnInit {
 
     this.teacherService
       .editTeacherByTeacher(this.idUser, teacherData)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   submitImage() {
@@ -136,15 +144,23 @@ export class EditProfilComponent implements OnInit {
 
     this.teacherService
       .editTeacherImageByTeacher(this.idUser, imageTeacher)
-      .subscribe((res) => {
-        this._snackBar.open(res.message, '', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      });
+      .subscribe(
+        (res) => {
+          this._snackBar.open(res.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+        (err) => {
+          this._snackBar.open(err.error.message, '', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
+      );
   }
 
   get teacherForm() {

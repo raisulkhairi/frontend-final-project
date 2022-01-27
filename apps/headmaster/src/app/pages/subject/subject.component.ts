@@ -45,15 +45,23 @@ export class SubjectComponent implements OnInit {
   }
 
   deleteSubject(id: string) {
-    this.subjectService.deleteSubject(id).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.subjectService.deleteSubject(id).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   private _formInit() {
@@ -83,15 +91,23 @@ export class SubjectComponent implements OnInit {
       link: this.form?.value.link,
     };
 
-    this.subjectService.AddSubject(subjectData).subscribe((res) => {
-      this._snackBar.open(res.message, '', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    this.subjectService.AddSubject(subjectData).subscribe(
+      (res) => {
+        this._snackBar.open(res.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      (err) => {
+        this._snackBar.open(err.error.message, '', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      }
+    );
   }
 
   get subjectForm() {

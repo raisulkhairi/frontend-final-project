@@ -4,6 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ScheduleService } from '../../services/schedule.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SubjectService } from '../../services/subject.service';
 @Component({
   selector: 'teacher-info',
   templateUrl: './info.component.html',
@@ -11,8 +12,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class InfoComponent implements OnInit {
   info?: any = {};
+  subject?: any;
   today: number = Date.now();
   constructor(
+    private subjectService: SubjectService,
     private scheduleService: ScheduleService,
     private dialogRef: MatDialogRef<InfoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -43,6 +46,13 @@ export class InfoComponent implements OnInit {
           const sec = tt[0] * 3600 + tt[1] * 60;
           this.info.endTime = new Date(sec * 1000).toISOString().substr(11, 5);
         }
+        this.subjectService.getAllSubject().subscribe((res) => {
+          res.forEach((el) => {
+            if (el.subject_name == this.info.title) {
+              this.subject = el;
+            }
+          });
+        });
       });
   }
 }

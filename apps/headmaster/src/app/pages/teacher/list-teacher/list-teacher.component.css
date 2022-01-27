@@ -8,6 +8,9 @@
 #teachers th {
   border: 1px solid #ddd;
   padding: 8px;
+  text-align: center;
+  font-family: sans-serif;
+  background: hsl(0deg 0% 98%);
 }
 
 #teachers tr:nth-child(even) {
@@ -21,7 +24,19 @@
 #teachers th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #04aa6d;
   color: white;
+}
+p {
+  font-size: 13px;
+}
+button{
+  width: 75px;
+}
+.detail{
+  background: #198754;
+}
+.box-table {
+  margin-top: 40px;
 }
