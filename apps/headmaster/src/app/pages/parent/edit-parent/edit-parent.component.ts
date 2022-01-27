@@ -66,23 +66,14 @@ export class EditParentComponent implements OnInit {
   childInvalid = true;
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idParent = [params['idParent']];
+    });
     this._checkParent();
     this._parentInit();
     this._parentImageInit();
-
-    setTimeout(() => {
-      this.route.params.subscribe((params) => {
-        this.idParent = [params['idParent']];
-
-        if (this.parentsId?.includes(this.idParent[0])) {
-          this._childrenInit();
-
-          this.parentEditForm(this.idParent[0]);
-        } else {
-          this.router.navigate(['/not-found']);
-        }
-      });
-    }, 500);
+    this._childrenInit();
+    this.parentEditForm(this.idParent[0]);
   }
 
   private _checkParent() {
@@ -90,6 +81,9 @@ export class EditParentComponent implements OnInit {
       this.parentsId = res.map((element) => {
         return element._id;
       });
+      if (!this.parentsId?.includes(this.idParent[0])) {
+        this.router.navigate(['/not-found']);
+      }
     });
   }
 

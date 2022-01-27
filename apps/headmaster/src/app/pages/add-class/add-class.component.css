@@ -32,10 +32,7 @@ input[type='submit']:hover {
 }
 
 .container {
-  margin-top: 20px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
+  height: 90vh;
 }
 
 .col-25 {
@@ -98,4 +95,23 @@ small {
   display: block;
   margin-bottom: 10px;
   color: red;
+}
+.box-add-class {
+  width: 100vh;
+  height: max-content;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 13vh auto;
+}
+button.save {
+  height: 40px;
+  width: 90px;
+  margin: 0 11px px;
+  text-align: center;
+  border-radius: 7px;
+  background: #dda705;
+  border: none;
+  padding: 9px 0;
+  font-family: sans-serif;
 }
