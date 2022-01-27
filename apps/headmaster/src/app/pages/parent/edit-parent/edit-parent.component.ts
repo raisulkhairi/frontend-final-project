@@ -82,7 +82,7 @@ export class EditParentComponent implements OnInit {
           this.router.navigate(['/not-found']);
         }
       });
-    }, 500);
+    }, 1000);
   }
 
   private _checkParent() {

@@ -61,7 +61,7 @@ export class EditStudentComponent implements OnInit {
           this.router.navigate(['/not-found']);
         }
       });
-    }, 500);
+    }, 1000);
   }
   private _checkStudent() {
     this.studentService.getAllStudent().subscribe((res) => {

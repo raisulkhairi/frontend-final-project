@@ -61,7 +61,7 @@ export class DetailTeacherComponent implements OnInit {
           this.router.navigate(['/not-found']);
         }
       });
-    }, 500);
+    }, 1000);
   }
 
   private _checkTeacher() {

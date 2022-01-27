@@ -16,7 +16,6 @@ span {
   font-size: 25px;
   font-weight: 400;
   margin-bottom: 28px;
-  margin-top: 70px;
 }
 .box-form {
   border: 1px solid;
@@ -38,7 +37,6 @@ input[type='date'].form-control {
   margin-left: 0;
 }
 form {
-  width: 70%;
   margin: 0 auto;
 }
 .gender span {
@@ -47,17 +45,7 @@ form {
 .mat-tab-label {
   color: black !important;
 }
-.save {
-  height: 60px;
-  width: 97px;
-  margin: 0 11px;
-  align-items: center;
-  text-align: center;
-  border-radius: 12px;
-  background: #dda705;
-  border: none;
-  box-shadow: 4px 5px lightgrey;
-}
+
 .reset {
   height: 60px;
   width: 97px;
@@ -83,4 +71,23 @@ small {
   display: block;
   margin-bottom: 10px;
   color: red;
+}
+.box-add-parent {
+  width: 100vh;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.save {
+  height: 40px;
+  width: 90px;
+  margin: 0 11px;
+  text-align: center;
+  border-radius: 7px;
+  background: #dda705;
+  border: none;
+  padding: 9px 0;
+  font-family: sans-serif;
 }

@@ -69,8 +69,7 @@
 
 <table id="parents">
   <tr>
-    <th>Id</th>
-    <th>Photo</th>
+    
     <th>Name</th>
     <th>Gender</th>
     <th>Occouption</th>
@@ -80,12 +79,6 @@
     <th>Action</th>
   </tr>
   <tr *ngFor="let data of parents" class="content-list">
-    <td>
-      <p>{{ data?._id }}</p>
-    </td>
-    <td>
-      <img [src]="data?.image" alt="" style="width: 100px" />
-    </td>
     <td>
       <p>{{ data?.first_name }} {{ data?.last_name }}</p>
     </td>
@@ -107,6 +100,7 @@
     </td>
     <td style="width: 100px">
       <button
+      class="detail"
         mat-flat-button
         color="primary"
         routerLink="/parentdetails/{{ data?._id }}"
@@ -116,6 +110,7 @@
       <br />
       <br />
       <button
+      class="edit"
         mat-flat-button
         color="primary"
         routerLink="/parentedit/{{ data?._id }}"

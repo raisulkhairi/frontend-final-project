@@ -29,7 +29,7 @@ export class DetailParentComponent implements OnInit {
         } else {
           this.router.navigate(['/not-found']);
         }
-      }, 500);
+      }, 1000);
     });
   }
 
