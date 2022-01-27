@@ -17,3 +17,15 @@ table {
 .example-full-width {
   width: 100%;
 }
+
+.bg-card {
+  background-color: #31353D;
+}
+
+.bg-subcard {
+  background-color: #818896;
+}
+
+.bg-text {
+  color: lightgray;
+}

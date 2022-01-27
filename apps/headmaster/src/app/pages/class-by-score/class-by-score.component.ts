@@ -52,11 +52,10 @@ export class ClassByScoreComponent implements OnInit {
           });
           this.posts.push(testData);
         });
-      });
-    setTimeout(() => {
-      this.dataSource = new MatTableDataSource(this.posts);
+        this.dataSource = new MatTableDataSource(this.posts);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-    }, 1000);
+      });
+    
   }
 }
